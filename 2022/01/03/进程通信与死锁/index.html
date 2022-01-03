@@ -1,0 +1,349 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>进程通信与死锁 | 修道馆</title><meta name="keywords" content="-操作系统"><meta name="author" content="逗号"><meta name="copyright" content="逗号"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="进程通信与死锁进程通信 什么是进程通信进程通信是指进程之间的信息交换，其所交换的信息量少则是一个状态或数值，多则是成千上万个字节 分类进程通信分为低级通信和高级通信两种 低级通信进程的互斥和同步可归结为低级通信 在进程互斥中，进程通过修改信号量向其他进程表明理解资源是否可用 高级通信用户可以直接利用操作系统所提供的一组通信命令高效地转送大量数据 高级进程通信方式的通信过程对用户是透明的 高级通信又">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程通信与死锁">
+<meta property="og:url" content="http://example.com/2022/01/03/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E4%B8%8E%E6%AD%BB%E9%94%81/index.html">
+<meta property="og:site_name" content="修道馆">
+<meta property="og:description" content="进程通信与死锁进程通信 什么是进程通信进程通信是指进程之间的信息交换，其所交换的信息量少则是一个状态或数值，多则是成千上万个字节 分类进程通信分为低级通信和高级通信两种 低级通信进程的互斥和同步可归结为低级通信 在进程互斥中，进程通过修改信号量向其他进程表明理解资源是否可用 高级通信用户可以直接利用操作系统所提供的一组通信命令高效地转送大量数据 高级进程通信方式的通信过程对用户是透明的 高级通信又">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img1.baidu.com/it/u=3884505006,3757630118&fm=26&fmt=auto&gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2022-01-03T09:39:04.424Z">
+<meta property="article:modified_time" content="2022-01-03T09:41:40.768Z">
+<meta property="article:author" content="逗号">
+<meta property="article:tag" content="-操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img1.baidu.com/it/u=3884505006,3757630118&fm=26&fmt=auto&gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/01/03/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E4%B8%8E%E6%AD%BB%E9%94%81/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '进程通信与死锁',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-03 17:41:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img1.baidu.com/it/u=3884505006,3757630118&amp;fm=26&amp;fmt=auto&amp;gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">修道馆</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">进程通信与死锁</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-03T09:39:04.424Z" title="发表于 2022-01-03 17:39:04">2022-01-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-03T09:41:40.768Z" title="更新于 2022-01-03 17:41:40">2022-01-03</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="进程通信与死锁"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="进程通信与死锁"><a href="#进程通信与死锁" class="headerlink" title="进程通信与死锁"></a>进程通信与死锁</h1><h2 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h2><hr>
+<h3 id="什么是进程通信"><a href="#什么是进程通信" class="headerlink" title="什么是进程通信"></a>什么是进程通信</h3><p>进程通信是指进程之间的信息交换，其所交换的信息量少则是一个状态或数值，多则是成千上万个字节</p>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>进程通信分为低级通信和高级通信两种</p>
+<h4 id="低级通信"><a href="#低级通信" class="headerlink" title="低级通信"></a>低级通信</h4><p>进程的互斥和同步可归结为低级通信</p>
+<p>在进程互斥中，进程通过修改信号量向其他进程表明理解资源是否可用</p>
+<h4 id="高级通信"><a href="#高级通信" class="headerlink" title="高级通信"></a>高级通信</h4><p>用户可以直接利用操作系统所提供的一组通信命令高效地转送大量数据</p>
+<p>高级进程通信方式的通信过程对用户是透明的</p>
+<h5 id="高级通信又可以分成三大类"><a href="#高级通信又可以分成三大类" class="headerlink" title="高级通信又可以分成三大类"></a>高级通信又可以分成三大类</h5><h6 id="1-共享存储器系统"><a href="#1-共享存储器系统" class="headerlink" title="1. 共享存储器系统"></a>1. 共享存储器系统</h6><p>互相通信的进程共享某些数据结构或共享存储区，所以分成两类</p>
+<ol>
+<li>基于共享数据结构的通信方式</li>
+<li>基于共享存储区的通信方式</li>
+</ol>
+<h6 id="2-消息传递系统"><a href="#2-消息传递系统" class="headerlink" title="2. 消息传递系统"></a>2. 消息传递系统</h6><p>进程间的数据交换以消息为单位。程序员直接利用系统提供的一组通信命令来实现通信，也可以分成两种</p>
+<ol>
+<li>直接通信方式</li>
+<li>间接通信方式:发送进程将消息发送到信箱中，接收进程在信箱中取得信息</li>
+</ol>
+<h6 id="3-管道通信"><a href="#3-管道通信" class="headerlink" title="3.管道通信"></a>3.管道通信</h6><p>管道：用于连接一个读进程和一个写进程已实现它们之间通信的共享文件 —–&gt;pipe文件</p>
+<p>管道通信机制必须提供三方面的协调能力：</p>
+<ol>
+<li>互斥</li>
+<li>同步</li>
+<li>判断对方是否存在</li>
+</ol>
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><h3 id="死锁的定义"><a href="#死锁的定义" class="headerlink" title="死锁的定义"></a>死锁的定义</h3><p>在多道程序系统中，一组进程中的每一个进程均无期限地等待被改组进程中的另一个进程占有且永远不会释放的资源。</p>
+<p><strong>产生死锁的原因</strong></p>
+<ol>
+<li>竞争资源</li>
+<li>进程推进顺序不当</li>
+</ol>
+<p><strong>产生死锁的必要条件</strong></p>
+<ol>
+<li>互斥条件   ： 一个资源在一段时间内只能被一个进程占有</li>
+<li>请求和保持条件 ： 进程因为请求资源阻塞是，对已经获得的资源保持不放</li>
+<li>不剥夺条件：进程获得的资源在使用完之前不能被剥夺</li>
+</ol>
+<h4 id="解决死锁的四种方式"><a href="#解决死锁的四种方式" class="headerlink" title="解决死锁的四种方式"></a>解决死锁的四种方式</h4><h5 id="预防死锁"><a href="#预防死锁" class="headerlink" title="预防死锁"></a>预防死锁</h5><ol>
+<li>抛弃请求和保持条件</li>
+</ol>
+<p>  即进程一次申请所有需要的资源，进程在运行过程中不会再提出任何资源请求</p>
+<p>优点：易于实现，安全</p>
+<p>缺点：资源浪费严重，进程延迟进行</p>
+<ol start="2">
+<li>抛弃不剥夺条件</li>
+</ol>
+<p>进程已经占有的资源在运行过程中可能被暂时释放</p>
+<ol start="3">
+<li>抛弃环路等待条件</li>
+</ol>
+<h5 id="避免死锁"><a href="#避免死锁" class="headerlink" title="避免死锁"></a>避免死锁</h5><p><strong>安全状态</strong> </p>
+<blockquote>
+<p>系统能够按某种进程顺序，如&lt;P1,P2,P3…..&gt;（安全序列），来为某个进程分配所需资源，直到最大需求，使每个进程都可以顺利完成。</p>
+<p>系统存在这样一个安全序列则成为系统处于安全状态，否则处于不安全状态</p>
+</blockquote>
+<blockquote>
+<p>避免死锁的本质就是让系统不进入不安全状态</p>
+</blockquote>
+<p><strong>避免死锁的银行家算法</strong></p>
+<ul>
+<li>可利用资源向量Available ： 初始值为系统中所配置的该类全部可用资源的数目</li>
+<li>最大需求矩阵Max ：代表某进程需要某资源的最大数目</li>
+<li>分配矩阵Allocation ： 表示进程已分得的资源的数目</li>
+<li>需求矩阵Need ：表示进程还需要资源的数目</li>
+<li>工作向量Work : 表示系统可提供给进程继续运行所需的各资源数目</li>
+<li>Finish ：表示系统是否有足够的资源分配给进程使之运行完成</li>
+</ul>
+<p>以某时刻的系统状态表为例</p>
+<table>
+<thead>
+<tr>
+<th align="center">进程</th>
+<th align="center"></th>
+<th align="center">Max</th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center">Allocation</th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center">Need</th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center">Available</th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"></td>
+<td align="center">R1</td>
+<td align="center">R2</td>
+<td align="center">R3</td>
+<td align="center">R1</td>
+<td align="center">R2</td>
+<td align="center">R3</td>
+<td align="center">R1</td>
+<td align="center">R2</td>
+<td align="center">R3</td>
+<td align="center">R1</td>
+<td align="center">R2</td>
+<td align="center">R3</td>
+</tr>
+<tr>
+<td align="center">P1</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">3</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">P2</td>
+<td align="center">3</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">P3</td>
+<td align="center">9</td>
+<td align="center">0</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">0</td>
+<td align="center">2</td>
+<td align="center">6</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">P4</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">P5</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">1</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>以进程P1为例我们可以知道P1进程需要R1 R2 R3 的最大数目为 7 5 3 ，已经拥有的数目为 0 1 0 需要 7 4 3才能够完成任务，目前可用资源数为 3 3 2</p>
+<p>具体分析过程：刚开始work = available为 3 3 2，P2.need &lt; work所以可以支持P2完成任务，P2完成任务，释放资源数为 2 0 0 此时work变为 5 3 2   —-&gt; Finish[2] = 1</p>
+<p>然后P4.need &lt; work ,可以支持P4完成工作，P4完成释放资源 2 1 1，work变为 7 4 3   —–&gt; Finish[4] = 1</p>
+<p>P5.need &lt; work ，P5 完成释放资源 0 0 2，work变为 7 4 5   —–&gt; Finish[5] = 1</p>
+<p>P3.need &lt;work, P3完成释放资源 3 0 2 ，work 变为 10 4 7   ——&gt; Finish[3] =1</p>
+<p>P1.need &lt; work,P1完成释放资源 0 1 0，work变为 10 5 7 ——-&gt; Finish[1] = 1</p>
+<p>得到一条安全序列 2 4 5 3 1 所以该系统处于安全状态</p>
+<h5 id="检测死锁"><a href="#检测死锁" class="headerlink" title="检测死锁"></a>检测死锁</h5><ol>
+<li>资源分配图</li>
+</ol>
+<p>以下图为例，进程P1分配到了两个R1，正在请求一个R2 ，线程P2分到了一个R1,一个R2，正在请求R1</p>
+<p><img src="%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E4%B8%8E%E6%AD%BB%E9%94%81.assets/image-20211230160350357.png" alt="image-20211230160350357"></p>
+<ol start="2">
+<li><p>死锁定理</p>
+<p> 当且仅当S状态资源分配图是不可完全简化的</p>
+</li>
+</ol>
+<p>死锁的检测算法可以采用银行家算法中的安全检测算法来完成</p>
+<h5 id="解除死锁"><a href="#解除死锁" class="headerlink" title="解除死锁"></a>解除死锁</h5><p>解除死锁的两种方法</p>
+<ol>
+<li>剥夺资源 ：从其他进程中剥夺足够的资源给死锁进程</li>
+<li>撤销进程 ：将全部死锁进程清除掉</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">逗号</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/01/03/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E4%B8%8E%E6%AD%BB%E9%94%81/">http://example.com/2022/01/03/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E4%B8%8E%E6%AD%BB%E9%94%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">修道馆</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">-操作系统</a></div><div class="post_share"><div class="social-share" data-image="https://img1.baidu.com/it/u=3884505006,3757630118&amp;fm=26&amp;fmt=auto&amp;gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/03/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%A8%8B%E5%BA%8F/"><img class="prev-cover" src="https://img1.baidu.com/it/u=3884505006,3757630118&amp;fm=26&amp;fmt=auto&amp;gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">进程与程序</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/03/%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B8%8E%E7%BA%BF%E7%A8%8B/"><img class="next-cover" src="https://img1.baidu.com/it/u=3884505006,3757630118&amp;fm=26&amp;fmt=auto&amp;gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">进程调度与线程</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/03/存储器管理/" title="存储管理"><img class="cover" src="https://img1.baidu.com/it/u=3884505006,3757630118&fm=26&fmt=auto&gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-03</div><div class="title">存储管理</div></div></a></div><div><a href="/2022/01/03/缓冲技术与中断技术/" title="缓冲技术与中断技术"><img class="cover" src="https://img1.baidu.com/it/u=3884505006,3757630118&fm=26&fmt=auto&gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-03</div><div class="title">缓冲技术与中断技术</div></div></a></div><div><a href="/2021/12/09/虚存的概念/" title="虚拟内存学习"><img class="cover" src="https://img1.baidu.com/it/u=3884505006,3757630118&fm=26&fmt=auto&gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-09</div><div class="title">虚拟内存学习</div></div></a></div><div><a href="/2022/01/03/虚拟存储器管理/" title="虚拟存储器管理"><img class="cover" src="https://img1.baidu.com/it/u=3884505006,3757630118&fm=26&fmt=auto&gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-03</div><div class="title">虚拟存储器管理</div></div></a></div><div><a href="/2022/01/03/进程与程序/" title="进程与程序"><img class="cover" src="https://img1.baidu.com/it/u=3884505006,3757630118&fm=26&fmt=auto&gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-03</div><div class="title">进程与程序</div></div></a></div><div><a href="/2022/01/03/进程调度与线程/" title="进程调度与线程"><img class="cover" src="https://img1.baidu.com/it/u=3884505006,3757630118&fm=26&fmt=auto&gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-03</div><div class="title">进程调度与线程</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/touxiang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">逗号</div><div class="author-info__description">大佬的第一步是从加入收藏夹开始的</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xiaobai111a" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E4%B8%8E%E6%AD%BB%E9%94%81"><span class="toc-number">1.</span> <span class="toc-text">进程通信与死锁</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.</span> <span class="toc-text">进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是进程通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.2.</span> <span class="toc-text">分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%8E%E7%BA%A7%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">低级通信</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">高级通信</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E9%80%9A%E4%BF%A1%E5%8F%88%E5%8F%AF%E4%BB%A5%E5%88%86%E6%88%90%E4%B8%89%E5%A4%A7%E7%B1%BB"><span class="toc-number">1.1.2.2.1.</span> <span class="toc-text">高级通信又可以分成三大类</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-%E5%85%B1%E4%BA%AB%E5%AD%98%E5%82%A8%E5%99%A8%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.1.2.2.1.1.</span> <span class="toc-text">1. 共享存储器系统</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.1.2.2.1.2.</span> <span class="toc-text">2. 消息传递系统</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.2.2.1.3.</span> <span class="toc-text">3.管道通信</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%BB%E9%94%81"><span class="toc-number">1.2.</span> <span class="toc-text">死锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">死锁的定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%AD%BB%E9%94%81%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">解决死锁的四种方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%84%E9%98%B2%E6%AD%BB%E9%94%81"><span class="toc-number">1.2.1.1.1.</span> <span class="toc-text">预防死锁</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E6%AD%BB%E9%94%81"><span class="toc-number">1.2.1.1.2.</span> <span class="toc-text">避免死锁</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E6%AD%BB%E9%94%81"><span class="toc-number">1.2.1.1.3.</span> <span class="toc-text">检测死锁</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E9%99%A4%E6%AD%BB%E9%94%81"><span class="toc-number">1.2.1.1.4.</span> <span class="toc-text">解除死锁</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/03/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%E8%A7%A3%E5%86%B3%E5%8A%9B%E6%89%A3406%20452%E4%B8%A4%E9%A2%98/" title="贪心算法解决力扣406,452两题"><img src="https://img1.baidu.com/it/u=3884505006,3757630118&amp;fm=26&amp;fmt=auto&amp;gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="贪心算法解决力扣406,452两题"/></a><div class="content"><a class="title" href="/2022/01/03/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%E8%A7%A3%E5%86%B3%E5%8A%9B%E6%89%A3406%20452%E4%B8%A4%E9%A2%98/" title="贪心算法解决力扣406,452两题">贪心算法解决力扣406,452两题</a><time datetime="2022-01-03T09:39:04.457Z" title="发表于 2022-01-03 17:39:04">2022-01-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/03/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" title="贪心算法学习"><img src="https://img1.baidu.com/it/u=3884505006,3757630118&amp;fm=26&amp;fmt=auto&amp;gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="贪心算法学习"/></a><div class="content"><a class="title" href="/2022/01/03/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" title="贪心算法学习">贪心算法学习</a><time datetime="2022-01-03T09:39:04.448Z" title="发表于 2022-01-03 17:39:04">2022-01-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/03/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BE%93%E5%85%A5%E4%B8%80%E4%B8%AAurl%E5%88%B0%E6%95%B4%E4%B8%AA%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E5%87%BA%E6%9D%A5%E7%BB%8F%E5%8E%86%E4%BA%86%E5%93%AA%E4%BA%9B%E8%BF%87%E7%A8%8B/" title="浏览器输入一个url到整个页面显示出来经历了哪些过程"><img src="https://img1.baidu.com/it/u=3884505006,3757630118&amp;fm=26&amp;fmt=auto&amp;gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="浏览器输入一个url到整个页面显示出来经历了哪些过程"/></a><div class="content"><a class="title" href="/2022/01/03/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BE%93%E5%85%A5%E4%B8%80%E4%B8%AAurl%E5%88%B0%E6%95%B4%E4%B8%AA%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E5%87%BA%E6%9D%A5%E7%BB%8F%E5%8E%86%E4%BA%86%E5%93%AA%E4%BA%9B%E8%BF%87%E7%A8%8B/" title="浏览器输入一个url到整个页面显示出来经历了哪些过程">浏览器输入一个url到整个页面显示出来经历了哪些过程</a><time datetime="2022-01-03T09:39:04.442Z" title="发表于 2022-01-03 17:39:04">2022-01-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/03/%E5%8D%A1%E8%AF%BA%E5%9B%BE/" title="卡诺图"><img src="https://img1.baidu.com/it/u=3884505006,3757630118&amp;fm=26&amp;fmt=auto&amp;gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="卡诺图"/></a><div class="content"><a class="title" href="/2022/01/03/%E5%8D%A1%E8%AF%BA%E5%9B%BE/" title="卡诺图">卡诺图</a><time datetime="2022-01-03T09:39:04.435Z" title="发表于 2022-01-03 17:39:04">2022-01-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/03/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%A8%8B%E5%BA%8F/" title="进程与程序"><img src="https://img1.baidu.com/it/u=3884505006,3757630118&amp;fm=26&amp;fmt=auto&amp;gp=0.jpg https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="进程与程序"/></a><div class="content"><a class="title" href="/2022/01/03/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%A8%8B%E5%BA%8F/" title="进程与程序">进程与程序</a><time datetime="2022-01-03T09:39:04.429Z" title="发表于 2022-01-03 17:39:04">2022-01-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 逗号</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
