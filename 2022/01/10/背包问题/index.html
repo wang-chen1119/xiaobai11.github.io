@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>修道馆 | 修道馆</title><meta name="author" content="逗号"><meta name="copyright" content="逗号"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="title :动态规划解决背包问题tags :动态规划  什么是背包问题用《图解算法》中的一个例子来进行说明：  假如你是一个小偷，背着一个能装4斤中的背包，你可以偷窃的物品有三种，分别为音响，笔记本电脑，吉他 怎样才能让拿走商品价值最高呢？   这种情况就是我们所说的背包问题,而背包问题又可以分为0-1背包和完全背包问题两种 0 - 1背包问题 0 - 1背包指每个物品只有一件且只有两种状态（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="修道馆">
+<meta property="og:url" content="http://example.com/2022/01/10/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="修道馆">
+<meta property="og:description" content="title :动态规划解决背包问题tags :动态规划  什么是背包问题用《图解算法》中的一个例子来进行说明：  假如你是一个小偷，背着一个能装4斤中的背包，你可以偷窃的物品有三种，分别为音响，笔记本电脑，吉他 怎样才能让拿走商品价值最高呢？   这种情况就是我们所说的背包问题,而背包问题又可以分为0-1背包和完全背包问题两种 0 - 1背包问题 0 - 1背包指每个物品只有一件且只有两种状态（">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/fengmian.jpg">
+<meta property="article:published_time" content="2022-01-10T10:07:32.030Z">
+<meta property="article:modified_time" content="2022-01-10T10:17:44.074Z">
+<meta property="article:author" content="逗号">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/fengmian.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/01/10/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '修道馆',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-10 18:17:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/fengmian.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">修道馆</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-10T10:07:32.030Z" title="发表于 2022-01-10 18:07:32">2022-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-10T10:17:44.074Z" title="更新于 2022-01-10 18:17:44">2022-01-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><hr>
+<p>title :动态规划解决背包问题<br>tags :动态规划</p>
+<hr>
+<h3 id="什么是背包问题"><a href="#什么是背包问题" class="headerlink" title="什么是背包问题"></a>什么是背包问题</h3><p>用《图解算法》中的一个例子来进行说明：</p>
+<blockquote>
+<p>假如你是一个小偷，背着一个能装4斤中的背包，你可以偷窃的物品有三种，分别为音响，笔记本电脑，吉他</p>
+<p>怎样才能让拿走商品价值最高呢？</p>
+</blockquote>
+<p><img src="https://image-1305623006.cos.ap-nanjing.myqcloud.com/image-20220110161434181.png" alt="image-20220110161434181"></p>
+<p><code>这种情况就是我们所说的背包问题,而背包问题又可以分为0-1背包和完全背包问题两种</code></p>
+<h3 id="0-1背包问题"><a href="#0-1背包问题" class="headerlink" title="0 - 1背包问题"></a>0 - 1背包问题</h3><blockquote>
+<p>0 - 1背包指每个物品只有一件且只有两种状态（取或不取）。</p>
+</blockquote>
+<h4 id="使用动态规划解决0-1背包问题"><a href="#使用动态规划解决0-1背包问题" class="headerlink" title="使用动态规划解决0-1背包问题"></a>使用动态规划解决0-1背包问题</h4><blockquote>
+<p>动态规划先解决子问题，在逐步解决大问题，而对于背包问题来说即先解决小容量背包问题再去解决大容量背包问题</p>
+</blockquote>
+<p>使用动态规划问题的一个很重要的环节就是能够推到出状态转换公式和画出dp数组，以最开始的例子来说，我们可以得到改例的状态转移公式为<br>$$<br>dp[i][j] = max(dp[i-1][j],dp[i-1][j-weight[i]]+value[i])<br>$$<br>公式可能不好容易理解，所以我们画出dp数组</p>
+<p><img src="https://image-1305623006.cos.ap-nanjing.myqcloud.com/image-20220110163625770.png" alt="image-20220110163625770"></p>
+<blockquote>
+<p>简单分析 ：首先当背包容量为0时我们一件物品都装不进来，所以我们拿到的价值为0，背包容量为1时只有吉他能够装进来，我们能够拿到的最高价值为1500，背包容量为2时也是如此，到背包容量为3时，我们发现可以拿到价值更高的笔记本电脑，这样我们能拿到的最高价值就成了2000，然后到背包容量为4时，我们既可以选择拿走音响也可以选择拿走吉他和笔记本电脑此时我们就需要进行比较即 3000 vs (2000 + 1500),显然我们选择吉他和笔记本电脑来获得更高的价值 3500！</p>
+</blockquote>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[][]  twoArrayBagProblem(<span class="keyword">int</span>[] values, <span class="keyword">int</span>[] weights, <span class="keyword">int</span> bagWeight)&#123;</span><br><span class="line">        <span class="keyword">int</span> len = values.length;</span><br><span class="line">        <span class="keyword">int</span>[][]dp = <span class="keyword">new</span> <span class="keyword">int</span>[len][bagWeight + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = weights[<span class="number">0</span>]; j &lt;= bagWeight; j++)&#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = values[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i =   <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= bagWeight; j++)&#123;</span><br><span class="line">              <span class="keyword">if</span> (j &lt; weights[i])&#123;</span><br><span class="line">                  dp[i][j] = dp[i - <span class="number">1</span>][j];</span><br><span class="line">              &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">              dp[i][j] = Math.max(dp[i - <span class="number">1</span>][j],dp[i - <span class="number">1</span>][j - weights[i]] + values[i]);</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Main m = <span class="keyword">new</span> Main();</span><br><span class="line">        <span class="keyword">int</span>[] weight = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span>[] value = &#123;<span class="number">1500</span>, <span class="number">2000</span>, <span class="number">3000</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> bagWeight = <span class="number">4</span>;</span><br><span class="line">        <span class="keyword">int</span>[][] res =  m.twoArrayBagProblem(value, weight, bagWeight);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>[] i : res)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j : i)&#123;</span><br><span class="line">                System.out.println(j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>滚动数组写法</strong></p>
+<blockquote>
+<p>在使用二维数组时我们可以发现对于状态转移方程来说完全可以使用一个一维数组来解决，即对于二维数组中的层层递进来说，变成一层覆盖一层，可以理解称为是一个动态数组</p>
+</blockquote>
+<p><img src="https://image-1305623006.cos.ap-nanjing.myqcloud.com/image-20220110165940216.png" alt="image-20220110165940216"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main1</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] oneArrayBagProblem(<span class="keyword">int</span>[] values, <span class="keyword">int</span>[] weights, <span class="keyword">int</span> bagWeight)&#123;</span><br><span class="line">        <span class="keyword">int</span> len = values.length;</span><br><span class="line">        <span class="keyword">int</span>[]dp = <span class="keyword">new</span> <span class="keyword">int</span>[bagWeight + <span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="comment">// 注意这里是倒序遍历，正序遍历会出现第一种物品多拿一次的情况，可以自己调试看一下</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = bagWeight; j &gt;= weights[i]; j--)&#123;</span><br><span class="line">                dp[j] = Math.max(dp[j],dp[j - weights[i]] + values[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Main1 m = <span class="keyword">new</span> Main1();</span><br><span class="line">        <span class="keyword">int</span>[] weight = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span>[] value = &#123;<span class="number">1500</span>, <span class="number">2000</span>, <span class="number">3000</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> bagWeight = <span class="number">4</span>;</span><br><span class="line">        <span class="keyword">int</span>[] res =  m.oneArrayBagProblem(value, weight, bagWeight);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j : res)&#123;</span><br><span class="line">            System.out.println(j);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="完全背包问题"><a href="#完全背包问题" class="headerlink" title="完全背包问题"></a>完全背包问题</h3><blockquote>
+<p>完全背包指物品有无数个我们可以拿随便数量的一种物品，即我们可以拿走四个吉他来获得最高价值</p>
+</blockquote>
+<h4 id="动态规划解决完全背包问题"><a href="#动态规划解决完全背包问题" class="headerlink" title="动态规划解决完全背包问题"></a>动态规划解决完全背包问题</h4><p>完全背包问题和0 - 1背包问题唯一的不同体现在遍历顺序上，因为我们一件物品可以取多次，在0-1背包中内层循环中我们是从大到小进行的，而在完全背包中我们要从小到大进行遍历，因为一种物品允许装入多次的。</p>
+<p><img src="https://image-1305623006.cos.ap-nanjing.myqcloud.com/image-20220110171312344.png" alt="image-20220110171312344"></p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] oneArrayBagProblem(<span class="keyword">int</span>[] values, <span class="keyword">int</span>[] weights, <span class="keyword">int</span> bagWeight)&#123;</span><br><span class="line">        <span class="keyword">int</span> len = values.length;</span><br><span class="line">        <span class="keyword">int</span>[]dp = <span class="keyword">new</span> <span class="keyword">int</span>[bagWeight + <span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = weights[i]; j &lt;= bagWeight; j++)&#123;</span><br><span class="line">                dp[j] = Math.max(dp[j],dp[j - weights[i]] + values[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Main2 m = <span class="keyword">new</span> Main2();</span><br><span class="line">        <span class="keyword">int</span>[] weight = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span>[] value = &#123;<span class="number">1500</span>, <span class="number">2000</span>, <span class="number">3000</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> bagWeight = <span class="number">4</span>;</span><br><span class="line">        <span class="keyword">int</span>[] res =  m.oneArrayBagProblem(value, weight, bagWeight);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j : res)&#123;</span><br><span class="line">            System.out.println(j);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="组合类题目采用动态规划的状态转移方程"><a href="#组合类题目采用动态规划的状态转移方程" class="headerlink" title="组合类题目采用动态规划的状态转移方程"></a>组合类题目采用动态规划的状态转移方程</h3><p>组合类问题的转移方程一般为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[j] += dp[j - nums[i]]</span><br></pre></td></tr></table></figure>
+
+<p>因为我们得到一个nums[i]时，我们有dp[j - nums[i]]种方式能满足j-nums的容量的背包，那么我们就有dp[j - nums[i]]种方式能够满足容量为j的背包</p>
+<p>即搞到一个 2 ，剩余容量为3有3种方式能够满足，那么容量为5时也一定能有3种方式来满足</p>
+<p><strong>参考资料</strong></p>
+<p>《算法图解》</p>
+<p>[代码随想录](<a target="_blank" rel="noopener" href="https://www.programmercarl.com/0494.%E7%9B%AE%E6%A0%87%E5%92%8C.html#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">代码随想录 (programmercarl.com)</a>)</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">逗号</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/01/10/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">http://example.com/2022/01/10/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">修道馆</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/fengmian.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/10/%E7%94%A8%E6%88%B7%E6%8E%A5%E5%8F%A3%E7%AE%A1%E7%90%86/"><img class="prev-cover" src="/img/fengmian.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2022/01/04/%E5%9B%9E%E6%BA%AF%E6%B3%95/"><img class="next-cover" src="/img/fengmian.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">回溯法</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/touxiang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">逗号</div><div class="author-info__description">大佬的第一步是从加入收藏夹开始的</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xiaobai111a" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">什么是背包问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0-1%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">0 - 1背包问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%A7%A3%E5%86%B30-1%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98"><span class="toc-number">2.1.</span> <span class="toc-text">使用动态规划解决0-1背包问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.2.</span> <span class="toc-text">代码实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">完全背包问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%A7%A3%E5%86%B3%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98"><span class="toc-number">3.1.</span> <span class="toc-text">动态规划解决完全背包问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">3.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E7%B1%BB%E9%A2%98%E7%9B%AE%E9%87%87%E7%94%A8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E6%96%B9%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">组合类题目采用动态规划的状态转移方程</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/MySQL%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" title="SQL连接查询"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SQL连接查询"/></a><div class="content"><a class="title" href="/2022/01/10/MySQL%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" title="SQL连接查询">SQL连接查询</a><time datetime="2022-01-10T10:14:04.950Z" title="发表于 2022-01-10 18:14:04">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/linux%E5%AD%A6%E4%B9%A0/" title="Linux学习总结"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux学习总结"/></a><div class="content"><a class="title" href="/2022/01/10/linux%E5%AD%A6%E4%B9%A0/" title="Linux学习总结">Linux学习总结</a><time datetime="2022-01-10T10:11:37.229Z" title="发表于 2022-01-10 18:11:37">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/OAuth2.0%E5%8D%8F%E8%AE%AE/" title="什么是OAuth2.0协议"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="什么是OAuth2.0协议"/></a><div class="content"><a class="title" href="/2022/01/10/OAuth2.0%E5%8D%8F%E8%AE%AE/" title="什么是OAuth2.0协议">什么是OAuth2.0协议</a><time datetime="2022-01-10T10:10:16.989Z" title="发表于 2022-01-10 18:10:16">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/%E7%94%A8%E6%88%B7%E6%8E%A5%E5%8F%A3%E7%AE%A1%E7%90%86/" title="无题"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/01/10/%E7%94%A8%E6%88%B7%E6%8E%A5%E5%8F%A3%E7%AE%A1%E7%90%86/" title="无题">无题</a><time datetime="2022-01-10T10:09:06.270Z" title="发表于 2022-01-10 18:09:06">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" title="无题"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/01/10/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" title="无题">无题</a><time datetime="2022-01-10T10:07:32.030Z" title="发表于 2022-01-10 18:07:32">2022-01-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 逗号</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

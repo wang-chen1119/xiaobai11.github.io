@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>什么是OAuth2.0协议 | 修道馆</title><meta name="keywords" content="OAuth2.0协议"><meta name="author" content="逗号"><meta name="copyright" content="逗号"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="什么是OAuth2.0协议 OAuth2.0协议是一个开放标准，允许用户授权第三方程序访问他们存储在另外的服务提供者上的信息，而不需要将用户和密码提供给第三方应用或分享他们数据的所有内容。  举一个例子：以我们使用QQ登录直播平台为例 我们想要在某平台看直播，但是我们又不想注册账号，所以我们选择使用QQ登录   这时会出现请求授权页面，我们点击授权，然后就以QQ登录上了直播平台   这便是OAut">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是OAuth2.0协议">
+<meta property="og:url" content="http://example.com/2022/01/10/OAuth2.0%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="修道馆">
+<meta property="og:description" content="什么是OAuth2.0协议 OAuth2.0协议是一个开放标准，允许用户授权第三方程序访问他们存储在另外的服务提供者上的信息，而不需要将用户和密码提供给第三方应用或分享他们数据的所有内容。  举一个例子：以我们使用QQ登录直播平台为例 我们想要在某平台看直播，但是我们又不想注册账号，所以我们选择使用QQ登录   这时会出现请求授权页面，我们点击授权，然后就以QQ登录上了直播平台   这便是OAut">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/fengmian.jpg">
+<meta property="article:published_time" content="2022-01-10T10:10:16.989Z">
+<meta property="article:modified_time" content="2022-01-10T10:10:56.941Z">
+<meta property="article:author" content="逗号">
+<meta property="article:tag" content="OAuth2.0协议">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/fengmian.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/01/10/OAuth2.0%E5%8D%8F%E8%AE%AE/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '什么是OAuth2.0协议',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-10 18:10:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/fengmian.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">修道馆</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">什么是OAuth2.0协议</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-10T10:10:16.989Z" title="发表于 2022-01-10 18:10:16">2022-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-10T10:10:56.941Z" title="更新于 2022-01-10 18:10:56">2022-01-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="什么是OAuth2.0协议"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="什么是OAuth2-0协议"><a href="#什么是OAuth2-0协议" class="headerlink" title="什么是OAuth2.0协议"></a>什么是OAuth2.0协议</h3><blockquote>
+<p>OAuth2.0协议是一个开放标准，允许用户授权第三方程序访问他们存储在另外的服务提供者上的信息，而不需要将用户和密码提供给第三方应用或分享他们数据的所有内容。</p>
+</blockquote>
+<p>举一个例子：以我们使用QQ登录直播平台为例</p>
+<p>我们想要在某平台看直播，但是我们又不想注册账号，所以我们选择使用QQ登录</p>
+<p><img src="https://image-1305623006.cos.ap-nanjing.myqcloud.com/image-20220105204607597.png" alt="image-20220105204607597"></p>
+<p><img src="https://image-1305623006.cos.ap-nanjing.myqcloud.com/image-20220105204750473.png" alt="image-20220105204750473"></p>
+<p>这时会出现请求授权页面，我们点击授权，然后就以QQ登录上了直播平台</p>
+<p><img src="https://image-1305623006.cos.ap-nanjing.myqcloud.com/image-20220105204859412.png" alt="image-20220105204859412"></p>
+<blockquote>
+<p>这便是OAuth协议的具体应用，QQ中存储了我的个人信息，如果直播平台想要获取这些信息就要经过QQ的安保系统，所以需要得到我们的授权，我们选择同意授权，然后直播平台才能获得QQ中自己的个人信息。</p>
+</blockquote>
+<h3 id="令牌和密码"><a href="#令牌和密码" class="headerlink" title="令牌和密码"></a>令牌和密码</h3><p>我们授权给第三方应用的一般是一个令牌，第三方平台通过这个令牌代替密码来进入系统。</p>
+<p>密码和令牌的差异</p>
+<blockquote>
+<ol>
+<li>令牌是短期的，可以设置失效时间，而密码如果用户不修改，那么一般是长期有效不会发生变化的</li>
+<li>令牌可以被数据所有者撤销，但密码一般不允许撤销</li>
+<li>令牌有权限范围而密码一般是完整权限</li>
+</ol>
+</blockquote>
+<h3 id="OAuth2-0的四种授权模式"><a href="#OAuth2-0的四种授权模式" class="headerlink" title="OAuth2.0的四种授权模式"></a>OAuth2.0的四种授权模式</h3><h4 id="1-授权码模式"><a href="#1-授权码模式" class="headerlink" title="1. 授权码模式"></a>1. 授权码模式</h4><p>第三方应用先获取一个授权码，然后通过授权码去获取令牌。</p>
+<p><img src="https://image-1305623006.cos.ap-nanjing.myqcloud.com/image-20220105213758480.png" alt="image-20220105213758480"></p>
+<h4 id="2-隐藏式"><a href="#2-隐藏式" class="headerlink" title="2. 隐藏式"></a>2. 隐藏式</h4><blockquote>
+<p>允许直接向前端颁发令牌。这种方式没有授权码这个中间步骤，所以称为（授权码）”隐藏式”（implicit）。</p>
+<p>用于纯前端应用没有后端，必须把令牌存储在前端</p>
+<p>与授权码模式相比少了用授权码换令牌的过程</p>
+</blockquote>
+<p>、<img src="https://image-1305623006.cos.ap-nanjing.myqcloud.com/image-20220105213828506.png" alt="image-20220105213828506"></p>
+<h4 id="3-密码式"><a href="#3-密码式" class="headerlink" title="3.密码式"></a>3.密码式</h4><blockquote>
+<p>适用于高度信任的应用,直接把账号密码给该应用然后该应用使用你的账号密码去申请令牌</p>
+</blockquote>
+<p><img src="https://image-1305623006.cos.ap-nanjing.myqcloud.com/image-20220105213956463.png" alt="image-20220105213956463"></p>
+<h4 id="4-凭证式"><a href="#4-凭证式" class="headerlink" title="4. 凭证式"></a>4. 凭证式</h4><blockquote>
+<p>适用于没有前端的命令行应用，即在命令行下请求令牌。</p>
+</blockquote>
+<p><strong>这种方式给出的令牌，是针对第三方应用的，而不是针对用户的，即有可能多个用户共享同一个令牌</strong></p>
+<p><img src="https://image-1305623006.cos.ap-nanjing.myqcloud.com/image-20220105214402902.png" alt="image-20220105214402902"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">逗号</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/01/10/OAuth2.0%E5%8D%8F%E8%AE%AE/">http://example.com/2022/01/10/OAuth2.0%E5%8D%8F%E8%AE%AE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">修道馆</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/OAuth2-0%E5%8D%8F%E8%AE%AE/">OAuth2.0协议</a></div><div class="post_share"><div class="social-share" data-image="/img/fengmian.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/10/linux%E5%AD%A6%E4%B9%A0/"><img class="prev-cover" src="/img/fengmian.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux学习总结</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/10/%E7%94%A8%E6%88%B7%E6%8E%A5%E5%8F%A3%E7%AE%A1%E7%90%86/"><img class="next-cover" src="/img/fengmian.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/touxiang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">逗号</div><div class="author-info__description">大佬的第一步是从加入收藏夹开始的</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xiaobai111a" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFOAuth2-0%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.</span> <span class="toc-text">什么是OAuth2.0协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A4%E7%89%8C%E5%92%8C%E5%AF%86%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">令牌和密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OAuth2-0%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%8E%88%E6%9D%83%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">OAuth2.0的四种授权模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%8E%88%E6%9D%83%E7%A0%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">1. 授权码模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%9A%90%E8%97%8F%E5%BC%8F"><span class="toc-number">3.2.</span> <span class="toc-text">2. 隐藏式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%AF%86%E7%A0%81%E5%BC%8F"><span class="toc-number">3.3.</span> <span class="toc-text">3.密码式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%87%AD%E8%AF%81%E5%BC%8F"><span class="toc-number">3.4.</span> <span class="toc-text">4. 凭证式</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/MySQL%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" title="SQL连接查询"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SQL连接查询"/></a><div class="content"><a class="title" href="/2022/01/10/MySQL%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" title="SQL连接查询">SQL连接查询</a><time datetime="2022-01-10T10:14:04.950Z" title="发表于 2022-01-10 18:14:04">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/linux%E5%AD%A6%E4%B9%A0/" title="Linux学习总结"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux学习总结"/></a><div class="content"><a class="title" href="/2022/01/10/linux%E5%AD%A6%E4%B9%A0/" title="Linux学习总结">Linux学习总结</a><time datetime="2022-01-10T10:11:37.229Z" title="发表于 2022-01-10 18:11:37">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/OAuth2.0%E5%8D%8F%E8%AE%AE/" title="什么是OAuth2.0协议"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="什么是OAuth2.0协议"/></a><div class="content"><a class="title" href="/2022/01/10/OAuth2.0%E5%8D%8F%E8%AE%AE/" title="什么是OAuth2.0协议">什么是OAuth2.0协议</a><time datetime="2022-01-10T10:10:16.989Z" title="发表于 2022-01-10 18:10:16">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/%E7%94%A8%E6%88%B7%E6%8E%A5%E5%8F%A3%E7%AE%A1%E7%90%86/" title="无题"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/01/10/%E7%94%A8%E6%88%B7%E6%8E%A5%E5%8F%A3%E7%AE%A1%E7%90%86/" title="无题">无题</a><time datetime="2022-01-10T10:09:06.270Z" title="发表于 2022-01-10 18:09:06">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" title="无题"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/01/10/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" title="无题">无题</a><time datetime="2022-01-10T10:07:32.030Z" title="发表于 2022-01-10 18:07:32">2022-01-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 逗号</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

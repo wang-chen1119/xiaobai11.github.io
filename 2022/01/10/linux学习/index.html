@@ -1,0 +1,799 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux学习总结 | 修道馆</title><meta name="keywords" content="Linux"><meta name="author" content="逗号"><meta name="copyright" content="逗号"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="​     Linux的目录结构基本介绍Linux的文件系统采用级层次的树状目录结构，在此结构中的最上层是根目录“&#x2F;”，然后在此目录下再创建其他的目录。 Linux中 一切皆文件  介绍：  &#x2F;bin：  bin 是 Binaries (二进制文件) 的缩写, 这个目录存放着最经常使用的命令。  &#x2F;boot：  这里存放的是启动 Linux 时使用的一些核心文件，包括一些连接文件以及镜像文件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux学习总结">
+<meta property="og:url" content="http://example.com/2022/01/10/linux%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="修道馆">
+<meta property="og:description" content="​     Linux的目录结构基本介绍Linux的文件系统采用级层次的树状目录结构，在此结构中的最上层是根目录“&#x2F;”，然后在此目录下再创建其他的目录。 Linux中 一切皆文件  介绍：  &#x2F;bin：  bin 是 Binaries (二进制文件) 的缩写, 这个目录存放着最经常使用的命令。  &#x2F;boot：  这里存放的是启动 Linux 时使用的一些核心文件，包括一些连接文件以及镜像文件。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/fengmian.jpg">
+<meta property="article:published_time" content="2022-01-10T10:11:37.229Z">
+<meta property="article:modified_time" content="2022-01-10T10:13:32.221Z">
+<meta property="article:author" content="逗号">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/fengmian.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/01/10/linux%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux学习总结',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-10 18:13:32'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/touxiang.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/fengmian.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">修道馆</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux学习总结</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-10T10:11:37.229Z" title="发表于 2022-01-10 18:11:37">2022-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-10T10:13:32.221Z" title="更新于 2022-01-10 18:13:32">2022-01-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Linux学习总结"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>​    </p>
+<h3 id="Linux的目录结构"><a href="#Linux的目录结构" class="headerlink" title="Linux的目录结构"></a>Linux的目录结构</h3><h4 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h4><p>Linux的文件系统采用级层次的树状目录结构，在此结构中的最上层是根目录“/”，然后在此目录下再创建其他的目录。</p>
+<p><strong>Linux中 一切皆文件</strong></p>
+<p><img src="C:\Users\王琛\AppData\Roaming\Typora\typora-user-images\image-20211106164853004.png" alt="image-20211106164853004"></p>
+<p>介绍：</p>
+<ul>
+<li><p><strong>/bin</strong>：<br>  bin 是 Binaries (二进制文件) 的缩写, 这个目录存放着最经常使用的命令。</p>
+</li>
+<li><p><strong>/boot：</strong><br>  这里存放的是启动 Linux 时使用的一些核心文件，包括一些连接文件以及镜像文件。</p>
+</li>
+<li><p><strong>/dev ：</strong><br>  dev 是 Device(设备) 的缩写, 该目录下存放的是 Linux 的外部设备，在 Linux 中访问设备的方式和访问文件的方式是相同的。</p>
+</li>
+<li><p><strong>/etc：</strong><br>  etc 是 Etcetera(等等) 的缩写,这个目录用来存放所有的系统管理所需要的配置文件和子目录。</p>
+</li>
+<li><p><strong>/home</strong>：<br>  用户的主目录，在 Linux 中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的</p>
+</li>
+<li><p><strong>/lib</strong>：<br>  lib 是 Library(库) 的缩写这个目录里存放着系统最基本的动态连接共享库，其作用类似于 Windows 里的 DLL 文件。几乎所有的应用程序都需要用到这些共享库。</p>
+</li>
+<li><p><strong>/lost+found</strong>：<br>  这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件。</p>
+</li>
+<li><p><strong>/media</strong>：<br>  Linux 系统会自动识别一些设备，例如U盘、光驱等等，当识别后，Linux 会把识别的设备挂载到这个目录下。</p>
+</li>
+<li><p><strong>/mnt</strong>：<br>  系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在 /mnt/ 上，然后进入该目录就可以查看光驱里的内容了。</p>
+</li>
+<li><p><strong>/opt</strong>：<br>  opt 是 optional(可选) 的缩写，这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。</p>
+</li>
+<li><p><strong>/proc</strong>：<br>  proc 是 Processes(进程) 的缩写，/proc 是一种伪文件系统（也即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。<br>  这个目录的内容不在硬盘上而是在内存里，我们也可以直接修改里面的某些文件，比如可以通过下面的命令来屏蔽主机的ping命令，使别人无法ping你的机器：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>/root</strong>：<br>  该目录为系统管理员，也称作超级权限者的用户主目录。</p>
+</li>
+<li><p><strong>/sbin</strong>：<br>  s 就是 Super User 的意思，是 Superuser Binaries (超级用户的二进制文件) 的缩写，这里存放的是系统管理员使用的系统管理程序。</p>
+</li>
+<li><p><strong>/selinux</strong>：<br>   这个目录是 Redhat/CentOS 所特有的目录，Selinux 是一个安全机制，类似于 windows 的防火墙，但是这套机制比较复杂，这个目录就是存放selinux相关的文件的。</p>
+</li>
+<li><p><strong>/srv</strong>：<br>   该目录存放一些服务启动之后需要提取的数据。</p>
+</li>
+<li><p><strong>/sys</strong>：</p>
+<p>  这是 Linux2.6 内核的一个很大的变化。该目录下安装了 2.6 内核中新出现的一个文件系统 sysfs 。</p>
+<p>  sysfs 文件系统集成了下面3种文件系统的信息：针对进程信息的 proc 文件系统、针对设备的 devfs 文件系统以及针对伪终端的 devpts 文件系统。</p>
+<p>  该文件系统是内核设备树的一个直观反映。</p>
+<p>  当一个内核对象被创建的时候，对应的文件和目录也在内核对象子系统中被创建。</p>
+</li>
+<li><p><strong>/tmp</strong>：<br>  tmp 是 temporary(临时) 的缩写这个目录是用来存放一些临时文件的。</p>
+</li>
+<li><p><strong>/usr</strong>：<br>   usr 是 unix shared resources(共享资源) 的缩写，这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于 windows 下的 program files 目录。</p>
+</li>
+<li><p><strong>/usr/bin：</strong><br>  系统用户使用的应用程序。</p>
+</li>
+<li><p><strong>/usr/sbin：</strong><br>  超级用户使用的比较高级的管理程序和系统守护程序。</p>
+</li>
+<li><p><strong>/usr/src：</strong><br>  内核源代码默认的放置目录。</p>
+</li>
+<li><p><strong>/var</strong>：<br>  var 是 variable(变量) 的缩写，这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。</p>
+</li>
+<li><p><strong>/run</strong>：<br>  是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。如果你的系统上有 /var/run 目录，应该让它指向 run。</p>
+</li>
+</ul>
+<blockquote>
+<p>在 Linux 系统中，有几个目录是比较重要的，平时需要注意不要误删除或者随意更改内部文件。</p>
+</blockquote>
+<blockquote>
+<p><strong>/etc</strong>： 上边也提到了，这个是系统中的配置文件，如果你更改了该目录下的某个文件可能会导致系统不能启动。</p>
+</blockquote>
+<blockquote>
+<p><strong>/bin, /sbin, /usr/bin, /usr/sbin</strong>: 这是系统预设的执行文件的放置目录，比如 ls 就是在 /bin/ls 目录下的。</p>
+</blockquote>
+<blockquote>
+<p>值得提出的是，/bin, /usr/bin 是给系统用户使用的指令（除root外的通用户），而/sbin, /usr/sbin 则是给 root 使用的指令。</p>
+</blockquote>
+<blockquote>
+<p><strong>/var</strong>： 这是一个非常重要的目录，系统上跑了很多程序，那么每个程序都会有相应的日志产生，而这些日志就被记录到这个目录下，具体在 /var/log 目录下，另外 mail 的预设放置也是在这里。</p>
+</blockquote>
+<h3 id="vi和vim编辑器"><a href="#vi和vim编辑器" class="headerlink" title="vi和vim编辑器"></a>vi和vim编辑器</h3><pre><code>#### 三种模式
+</code></pre>
+<h5 id="正常模式（命令模式）"><a href="#正常模式（命令模式）" class="headerlink" title="正常模式（命令模式）"></a>正常模式（命令模式）</h5><p>用户刚刚启动 vi/vim，便进入了命令模式。</p>
+<p>此状态下敲击键盘动作会被Vim识别为命令，而非输入字符。比如我们此时按下i，并不会输入一个字符，i被当作了一个命令。</p>
+<p>以下是常用的几个命令：</p>
+<ul>
+<li><strong>i</strong> 切换到输入模式，以输入字符。</li>
+<li><strong>x</strong> 删除当前光标所在处的字符。</li>
+<li><strong>:</strong> 切换到底线命令模式，以在最底一行输入命令。</li>
+</ul>
+<p>若想要编辑文本：启动Vim，进入了命令模式，按下i，切换到输入模式。</p>
+<p>命令模式只有一些最基本的命令，因此仍要依靠底线命令模式输入更多命令。</p>
+<h5 id="编辑模式"><a href="#编辑模式" class="headerlink" title="编辑模式"></a>编辑模式</h5><p>在命令模式下按下i就进入了输入模式。</p>
+<p>在输入模式中，可以使用以下按键：</p>
+<ul>
+<li><strong>字符按键以及Shift组合</strong>，输入字符</li>
+<li><strong>ENTER</strong>，回车键，换行</li>
+<li><strong>BACK SPACE</strong>，退格键，删除光标前一个字符</li>
+<li><strong>DEL</strong>，删除键，删除光标后一个字符</li>
+<li><strong>方向键</strong>，在文本中移动光标</li>
+<li><strong>HOME</strong>/<strong>END</strong>，移动光标到行首/行尾</li>
+<li><strong>Page Up</strong>/<strong>Page Down</strong>，上/下翻页</li>
+<li><strong>Insert</strong>，切换光标为输入/替换模式，光标将变成竖线/下划线</li>
+<li><strong>ESC</strong>，退出输入模式，切换到命令模式</li>
+</ul>
+<h5 id="命令行模式"><a href="#命令行模式" class="headerlink" title="命令行模式"></a>命令行模式</h5><p>在命令模式下按下:（英文冒号）就进入了底线命令模式。</p>
+<p>底线命令模式可以输入单个或多个字符的命令，可用的命令非常多。</p>
+<p>在底线命令模式中，基本的命令有（已经省略了冒号）：</p>
+<ul>
+<li>q 退出程序</li>
+<li>w 保存文件</li>
+</ul>
+<p>按ESC键可随时退出底线命令模式。</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2014/07/vim-vi-workmodel.png" alt="img"></p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2015/10/vi-vim-cheat-sheet-sch.gif" alt="img"></p>
+<h3 id="Linux-用户管理"><a href="#Linux-用户管理" class="headerlink" title="Linux 用户管理"></a>Linux 用户管理</h3><p><img src="C:\Users\王琛\AppData\Roaming\Typora\typora-user-images\image-20211106173731547.png" alt="image-20211106173731547"></p>
+<p>说明</p>
+<blockquote>
+<ol>
+<li>Linux是一个多用户多任务的操作系统，任何一个要使用系统资源的用户，都必须先向系统管理员申请一个账号，然后以这个账号的身份进入系统</li>
+<li>Linux的用户至少要属于一个组</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>查看当前用户 : whoami</p>
+</blockquote>
+<h4 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h4><h6 id="1-添加用户"><a href="#1-添加用户" class="headerlink" title="1. 添加用户"></a>1. 添加用户</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd [选项] 用户名</span><br></pre></td></tr></table></figure>
+
+<p>相关参数:</p>
+<blockquote>
+<p>参数说明：</p>
+<ul>
+<li><p>选项:</p>
+<ul>
+<li>-c comment 指定一段注释性描述。</li>
+<li>-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。</li>
+<li>-g 用户组 指定用户所属的用户组。</li>
+<li>-G 用户组，用户组 指定用户所属的附加组。</li>
+<li>-s Shell文件 指定用户的登录Shell。</li>
+<li>-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。</li>
+</ul>
+</li>
+<li><p>用户名:</p>
+<p> 指定新账号的登录名。</p>
+</li>
+</ul>
+</blockquote>
+<p>相关例子 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -d /home/myhome -m wangchen</span><br></pre></td></tr></table></figure>
+
+<p>通过 -d 和 -m两个选项 创建一个用户并指定其家目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -s /bin/sh -g group -G group1,group2 wangchen</span><br></pre></td></tr></table></figure>
+
+<p>通过-s ,-g ,-G选项指定用户登录的shell ，并通过-g，-G选项指定用户所在用户组和附加组</p>
+<h6 id="2-删除账号"><a href="#2-删除账号" class="headerlink" title="2.删除账号"></a>2.删除账号</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userdel 选项 用户名</span><br></pre></td></tr></table></figure>
+
+<p>常用选项 -r ，将用户的主目录一起删除</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userdel -r wangchen</span><br></pre></td></tr></table></figure>
+
+<p>此命令会删除wangchen在系统文件中（主要是/etc/passwd,/etc/shadow,/etc/group等）的记录，同时删除用户的主目录</p>
+<h6 id="3-修改账号"><a href="#3-修改账号" class="headerlink" title="3.修改账号"></a>3.修改账号</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod 选项 用户名</span><br></pre></td></tr></table></figure>
+
+<p>常用的选项包括<code>-c, -d, -m, -g, -G, -s, -u以及-o等</code>，这些选项的意义与<code>useradd</code>命令中的选项一样，可以为用户指定新的资源值。</p>
+<p>另外，有些系统可以使用选项：-l 新用户名</p>
+<p>这个选项指定一个新的账号，即将原来的用户名改为新的用户名。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># usermod -s /bin/ksh -d /home/z –g developer sam</span><br></pre></td></tr></table></figure>
+
+<p>此命令将用户sam的登录Shell修改为ksh，主目录改为/home/z，用户组改为developer。</p>
+<h6 id="4-用户口令的管理"><a href="#4-用户口令的管理" class="headerlink" title="4.用户口令的管理"></a>4.用户口令的管理</h6><p>用户管理的一项重要内容是用户口令的管理。用户账号刚创建时没有口令，但是被系统锁定，无法使用，必须为其指定口令后才可以使用，即使是指定空口令。</p>
+<p>指定和修改用户口令的Shell命令是<code>passwd</code>。超级用户可以为自己和其他用户指定口令，普通用户只能用它修改自己的口令。命令的格式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd 选项 用户名</span><br></pre></td></tr></table></figure>
+
+<p>可使用的选项：</p>
+<ul>
+<li>-l 锁定口令，即禁用账号。</li>
+<li>-u 口令解锁。</li>
+<li>-d 使账号无口令。</li>
+<li>-f 强迫用户下次登录时修改口令。</li>
+</ul>
+<p>如果默认用户名，则修改当前用户的口令。</p>
+<p>例如，假设当前用户是sam，则下面的命令修改该用户自己的口令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ passwd </span><br><span class="line">Old password:****** </span><br><span class="line">New password:******* </span><br><span class="line">Re-enter new password:*******</span><br></pre></td></tr></table></figure>
+
+<p>如果是超级用户，可以用下列形式指定任何用户的口令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># passwd sam </span><br><span class="line">New password:******* </span><br><span class="line">Re-enter new password:*******</span><br></pre></td></tr></table></figure>
+
+<p>普通用户修改自己的口令时，passwd命令会先询问原口令，验证后再要求用户输入两遍新口令，如果两次输入的口令一致，则将这个口令指定给用户；而超级用户为用户指定口令时，就不需要知道原口令。</p>
+<p>为了系统安全起见，用户应该选择比较复杂的口令，例如最好使用8位长的口令，口令中包含有大写、小写字母和数字，并且应该与姓名、生日等不相同。</p>
+<p>为用户指定空口令时，执行下列形式的命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># passwd -d sam</span><br></pre></td></tr></table></figure>
+
+<p>此命令将用户 sam 的口令删除，这样用户 sam 下一次登录时，系统就不再允许该用户登录了。</p>
+<p>passwd 命令还可以用 -l(lock) 选项锁定某一用户，使其不能登录，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># passwd -l sam</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="用户和组的相关文件"><a href="#用户和组的相关文件" class="headerlink" title="用户和组的相关文件"></a>用户和组的相关文件</h4><ol>
+<li>用户配置文件（存放用户信息）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211108212029202.png" alt="image-20211108212029202"></p>
+<blockquote>
+<p> 每行的含义 用户名 ；口令 ；用户标识号；组标识号；注释性解释；主目录；登录shell</p>
+</blockquote>
+<ol start="2">
+<li>组配置文件（组信息）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/group</span><br></pre></td></tr></table></figure>
+
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211108212103224.png" alt="image-20211108212103224"></p>
+<blockquote>
+<p>每行含义：组名；口令；组标识号；组内用户列表</p>
+</blockquote>
+<ol start="3">
+<li>口令配置文件（密码和登录信息，加密）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/shadow</span><br></pre></td></tr></table></figure>
+
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211108212156664.png" alt="image-20211108212156664"></p>
+<blockquote>
+<p>每行含义 ： 登录名；加密口令：最后一次修改时间，最小时间间隔，最大时间间隔，警告时间，不活动时间，失效时间，标志</p>
+</blockquote>
+<h4 id="linux的运行级别"><a href="#linux的运行级别" class="headerlink" title="linux的运行级别"></a>linux的运行级别</h4><p><strong>Linux 有7种运行级别 常用的级别是3和5</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">运行级别0：系统停机状态，系统的默认运行级别不能设为0，否则不能正常启动</span><br><span class="line"></span><br><span class="line">运行级别1：单用户工作状态，root权限，用于系统维护，禁止远程登录 可以用来找回用户密码</span><br><span class="line"></span><br><span class="line">运行级别2：多用户状态（没有nfs） 不支持网络</span><br><span class="line"></span><br><span class="line">运行级别3：完全的多用户状态（有nfs） 登录后进入控制台命令行模式</span><br><span class="line"></span><br><span class="line">运行级别4：系统未使用，保留</span><br><span class="line"></span><br><span class="line">运行级别5：x11控制台，登录后进入图形GUI模式</span><br><span class="line"></span><br><span class="line">运行级别6：系统正常关闭并重启 默认级别不能设为6 否则系统将不能正常启动</span><br></pre></td></tr></table></figure>
+
+<p>开机流程说明 </p>
+<blockquote>
+<p>开机 –&gt; BIOS –&gt;/boot –&gt; init进程 –&gt;运行级别 –&gt;运行级对应的服务</p>
+</blockquote>
+<p>指定系统的运行级别的配置文件 <code>/etc/inittab</code></p>
+<p>切换到指定运行级别的指令 <code>init[0123456]</code></p>
+<p>init 3 ：</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211108215554483.png" alt="image-20211108215554483"></p>
+<p>init 5 :</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211108215644685.png" alt="image-20211108215644685"></p>
+<p>init 0 ：可以用来关机</p>
+<h6 id="question-面试题：-如何找回root密码"><a href="#question-面试题：-如何找回root密码" class="headerlink" title=":question:面试题： 如何找回root密码"></a>:question:面试题： 如何找回root密码</h6><p>切换到单用户模式登陆，此时root登录不需要密码，然后在修改密码即可</p>
+<h3 id="文件的压缩"><a href="#文件的压缩" class="headerlink" title="文件的压缩"></a>文件的压缩</h3><h4 id="1-gzip-与-gunzip-（不常用）"><a href="#1-gzip-与-gunzip-（不常用）" class="headerlink" title="1. gzip 与 gunzip （不常用）"></a>1. gzip 与 gunzip （不常用）</h4><p>使用方式 gzip /gunzip+ 文件 实现压缩和解压 </p>
+<p>注意点</p>
+<blockquote>
+<p>gzip压缩后源文件不会保留</p>
+</blockquote>
+<h4 id="2-zip-uzip-指令-在打包项目中会很有用"><a href="#2-zip-uzip-指令-在打包项目中会很有用" class="headerlink" title="2.zip/uzip 指令(在打包项目中会很有用)"></a>2.zip/uzip 指令(在打包项目中会很有用)</h4><h5 id="基本语法-1"><a href="#基本语法-1" class="headerlink" title="基本语法"></a>基本语法</h5><p>zip　［选项］　xxx.zip　将要压缩的内容</p>
+<p>unzip  [选项] xxx.zip  解压</p>
+<h5 id="常用选项"><a href="#常用选项" class="headerlink" title="常用选项"></a>常用选项</h5><p>-r ： 递归压缩，即压缩目录</p>
+<p>-d &lt;指定压缩后文件的存放目录&gt;：</p>
+<p>举例 ：</p>
+<p>1.将home下全部文件进行打包 文件名为 pg.zip</p>
+<ol start="2">
+<li>将该包解压到/opt/wang的目录下</li>
+</ol>
+<blockquote>
+<p>unzip -d  /opt/tmp pg.zip </p>
+</blockquote>
+<h4 id="3-tar指令"><a href="#3-tar指令" class="headerlink" title="3.tar指令"></a>3.tar指令</h4><p>打包指令，打包后的文件是 tar.gz的文件</p>
+<h5 id="基本语法-2"><a href="#基本语法-2" class="headerlink" title="基本语法"></a>基本语法</h5><p>tar [选项]  XXX.tar.gz  打包的内容  功能：打包目录，压缩后的文件格式.tar.gz</p>
+<h5 id="选项说明："><a href="#选项说明：" class="headerlink" title="选项说明："></a>选项说明：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-c    产生.tar打包文件</span><br><span class="line"></span><br><span class="line">-v    显示详细信息</span><br><span class="line"></span><br><span class="line">-f    指定压缩后的文件名</span><br><span class="line"></span><br><span class="line">-z    打包同时压缩</span><br><span class="line"></span><br><span class="line">-x    解包.tar文件</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>例子：</p>
+<ol>
+<li>将/home/a1.txt 和 /home/a2.txt 压缩成a.tar.gz</li>
+</ol>
+<blockquote>
+<p>tar zcvf a.tar.gz a1.txt a2.txt</p>
+</blockquote>
+<p>!</p>
+<ol start="2">
+<li>将a.tar.gz 解压到home文件 </li>
+</ol>
+<blockquote>
+<p>tar zxvf a.tar.gz</p>
+</blockquote>
+<ol start="3">
+<li> 将a.tar.gz 解压到/opt下</li>
+</ol>
+<blockquote>
+<p>tar zxvf a.tar.gz -C /opt</p>
+</blockquote>
+<h3 id="组管理和权限管理"><a href="#组管理和权限管理" class="headerlink" title="组管理和权限管理"></a>组管理和权限管理</h3><h4 id="1-Linux组的基本介绍"><a href="#1-Linux组的基本介绍" class="headerlink" title="1. Linux组的基本介绍"></a>1. Linux组的基本介绍</h4><p>Linux中每个用户必须属于一个组，不能独立于组外。在linux中每个文件有所有者、所在组、其他组的概念</p>
+<ol>
+<li>所有者</li>
+</ol>
+<blockquote>
+<p>一般为文件的创建者，谁创建了该文件，就自然成为了该文件的所有者</p>
+</blockquote>
+<h6 id="查看文件的所有者"><a href="#查看文件的所有者" class="headerlink" title="查看文件的所有者"></a>查看文件的所有者</h6><p>指令 ： ls-ahl</p>
+<p>例子： 创建一个组 police 再创建一个用户 tom  用tom用户创建一个文件</p>
+<h6 id="修改文件所有者"><a href="#修改文件所有者" class="headerlink" title="修改文件所有者"></a>修改文件所有者</h6><p>指令： chown  用户名  文件名</p>
+<p>应用：使用root 创建一个文件 apple.txt ，然后将其所有者修改为tom</p>
+<blockquote>
+<p>chown tom apple.txt</p>
+</blockquote>
+<h6 id="修改文件所在组"><a href="#修改文件所在组" class="headerlink" title="修改文件所在组"></a>修改文件所在组</h6><p>指令：chgrp 组名 文件名</p>
+<p>应用：使用root用户创建文件 orange.txt，并修改到police</p>
+<blockquote>
+<p>chgrp police orange.txt</p>
+</blockquote>
+<h4 id="2-权限的基本介绍"><a href="#2-权限的基本介绍" class="headerlink" title="2.权限的基本介绍"></a>2.权限的基本介绍</h4><p>0-9位说明</p>
+<ul>
+<li>第0位代表文件类型</li>
+<li>1-3位确定所有者拥有该文件的权限</li>
+<li>4-6位确定所属组（同用户组的）拥有的权限</li>
+<li>7-9位确定其他用户拥有该文件的权限</li>
+</ul>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211107220429826.png" alt="image-20211107220429826"></p>
+<p><strong>rwx权限详解</strong></p>
+<ol>
+<li>作用到文件</li>
+</ol>
+<p>[r] 代表可读（read）：可以读取，查看</p>
+<p>[w] 代表可写（write）：可以修改，但是不代表能删除该文件，用户能删出该文件的前提是拥有对该文件所在目录的写权限</p>
+<p>[x] 代表可执行（execute）：可以被执行</p>
+<ol start="2">
+<li>作用到目录</li>
+</ol>
+<p>[r] 代表可读（read）：可以读取，ls 查看</p>
+<p>[w] 代表可写（write）：可以修改,目录内创建，删除，重命名目录</p>
+<p>[x] 代表可执行（execute）：可以进入该目录</p>
+<blockquote>
+<p>rwx 用数字表示 r = 4 ，w = 2，x = 1</p>
+</blockquote>
+<p><em><strong>案例</strong></em></p>
+<p> <code>-rw-r--r--. 1 root root    0 10月 21 10:53 log.txt</code></p>
+<blockquote>
+<ol>
+<li>第一个字符代表文件类型 文件（-）目录（d）链接（l）</li>
+<li>三个一组（r w x）</li>
+</ol>
+<ul>
+<li>第一组 r w 代表文件拥有者的权限是读和写</li>
+<li>第二组 r 代表与文件拥有者同一组的用户的权限是读</li>
+<li>第三组 r 代表不与文件拥有者同一组的其他用户的权限是读</li>
+</ul>
+<ol start="3">
+<li>1代表   文件的硬链接数   目录的子目录数</li>
+<li> root 用户</li>
+<li> root 组</li>
+<li> 0 文件大小字节</li>
+<li> 10月 21 10:53  文件最后修改日期</li>
+<li> log.txt 文件名</li>
+</ol>
+</blockquote>
+<p>:bookmark_tabs:<strong>小细节</strong></p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211114220631195.png" alt="image-20211114220631195"></p>
+<p>用ls -la会发现.  和 .. 两个目录</p>
+<p>其中.代表当前目录   ..代表上一级目录</p>
+<h6 id="修改权限-chmod指令"><a href="#修改权限-chmod指令" class="headerlink" title="修改权限 -chmod指令"></a>修改权限 -chmod指令</h6><p><strong>基本说明</strong></p>
+<p>通过chmod指令，可以修改文件或者目录的权限</p>
+<p><em><strong>第一种方式：通过+，-，=变更权限</strong></em></p>
+<p>u：所有者 g：所有者  o：其他人 a：所有人</p>
+<ol>
+<li>chmod u=rwx g=rw o=r  文件目录名</li>
+<li>chmod o+w   文件目录名</li>
+<li>chomd u-w    文件目录名</li>
+</ol>
+<p><em><strong>第二种方式:通过数字变更权限</strong></em></p>
+<p>规则： r = 4  w = 2  x = 1  rwx = 7</p>
+<p>chmod u=rwx，g=rw，o=r   文件目录名</p>
+<p>相当于  chmod  764</p>
+<h6 id="修改文件所有者-chown"><a href="#修改文件所有者-chown" class="headerlink" title="修改文件所有者-chown"></a>修改文件所有者-chown</h6><p><strong>基本介绍</strong></p>
+<p>chown newowner file 改变文件的所有者</p>
+<p>chown newowner:newgroup file 改变用户的所有者和所有组</p>
+<p>-R 如果是目录 则将其下所有子文件或目录递归生效</p>
+<p><strong>案例演示</strong></p>
+<p>1.将/home下的a1.txt的文件所有者改成tom</p>
+<p><code>chown tom a1.txt</code></p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211114223249425.png" alt="image-20211114223249425"></p>
+<p>2.将/home下的ddd目录下的所有文件和目录的所有者都改成tom</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211114223426161.png" alt="image-20211114223426161"></p>
+<p><code>chown -R tom ddd</code></p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211114223532673-16369005559811.png" alt="image-20211114223532673"></p>
+<h6 id="修改文件的所有组"><a href="#修改文件的所有组" class="headerlink" title="修改文件的所有组"></a>修改文件的所有组</h6><p><strong>基本介绍</strong></p>
+<p>chgrp newgroup file 改变文件的所有组</p>
+<p><strong>案例</strong></p>
+<ol>
+<li>将/home下的a1.txt的文件所有组改成tom</li>
+</ol>
+<p> <code> chgrp tom a1.txt</code></p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211114224241266.png" alt="image-20211114224241266"></p>
+<ol start="2">
+<li>将/home下的ddd目录下的所有文件和目录的所有组都改成tom</li>
+</ol>
+<p><code>chgrp -R tom ddd</code></p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211114224402376.png" alt="image-20211114224402376"></p>
+<h3 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h3><h4 id="crond-任务调度"><a href="#crond-任务调度" class="headerlink" title="crond 任务调度"></a>crond 任务调度</h4><h6 id="基本介绍-1"><a href="#基本介绍-1" class="headerlink" title="基本介绍"></a>基本介绍</h6><p>crontab 进行定时人物的设置</p>
+<p><strong>概述</strong></p>
+<p>任务调度：是指系统在某个时间执行的特定的命令或者程序</p>
+<p>分类：</p>
+<ol>
+<li>系统工作：有些重要的工作必须周而复始地执行。如病毒扫描</li>
+<li>个别用户工作：个别用户可能希望执行某些程序，比如mysql数据库的备份</li>
+</ol>
+<p><strong>基本语法</strong></p>
+<p>crontab [选项]</p>
+<p><strong>常用选项</strong></p>
+<blockquote>
+<p>-e    编辑crontab定时任务</p>
+<p>-l     查询crontab任务</p>
+<p>-r     删除当前用户的所有crontab任务</p>
+<p>service crond restart [重启任务调度]</p>
+</blockquote>
+<ol>
+<li>如果只是简单的任务，可以不用写脚本，直接在crontab中加入任务即可</li>
+<li>对于比较复杂的任务需要写脚本（shell编程）</li>
+</ol>
+<h6 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h6><p>设置任务调度任务文件： /etc/crontab</p>
+<p>设置个人任务调度： 执行crontab -e</p>
+<p>接着输入任务到调度文件</p>
+<p>如: * /1 * * * * ls -l /etc &gt;&gt; /tmp/to.txt（每小时的每分钟执行ls-l /etc/&gt;/tmp/to.txt）</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211116214252988.png" alt="image-20211116214252988"></p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211116215328536.png" alt="image-20211116215328536"></p>
+<h3 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h3><h4 id="分区基本知识"><a href="#分区基本知识" class="headerlink" title="分区基本知识"></a>分区基本知识</h4><h5 id="分区的方式："><a href="#分区的方式：" class="headerlink" title="分区的方式："></a>分区的方式：</h5><ol>
+<li><p>mbr分区</p>
+<ul>
+<li>最多支持四个主分区</li>
+<li>系统只能安装在主分区</li>
+<li>扩展分区要占一个主分区</li>
+<li>MBR最大只支持2TB  但拥有最好的兼容性</li>
+</ul>
+</li>
+<li><p>gtp分区</p>
+<ul>
+<li><p>支持无限多个主分区(但操作系统可能限制，比如Windows下最多128个分区)</p>
+</li>
+<li><p>最大支持18EB的大容量(EB=1024PB,PB=1024TB)</p>
+</li>
+<li><p>Windows7 64位以后支持gtp</p>
+</li>
+</ul>
+<h4 id="Linux分区"><a href="#Linux分区" class="headerlink" title="Linux分区"></a>Linux分区</h4><p> <strong>原理介绍：</strong></p>
+<p> 1） Linux 来说无论有几个分区，分给哪一个目录使用，它归根结底就只有一个根目录，一个独立且唯一的文件结构，Linux中每个分区都是用来组成整个文件系统的一部分。</p>
+<p> 2）Linux采用了一种“载入”的处理方法，它的整个文件系统中包含了一整套的文件和目录，且将一个分区和一个目录联系起来。这时要载入的一个分区使它的存储空间在一个目录下获得。</p>
+<p> 3）示意图</p>
+<p> <img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211116223124480.png" alt="image-20211116223124480"></p>
+</li>
+</ol>
+<h5 id="硬盘说明"><a href="#硬盘说明" class="headerlink" title="硬盘说明"></a>硬盘说明</h5><p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211116223552160.png" alt="image-20211116223552160"></p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211116224126673.png" alt="image-20211116224126673"></p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/image-20211116224207416.png" alt="image-20211116224207416"></p>
+<h1 id="Linux-磁盘管理"><a href="#Linux-磁盘管理" class="headerlink" title="Linux 磁盘管理"></a>Linux 磁盘管理</h1><p>Linux 磁盘管理好坏直接关系到整个系统的性能问题。</p>
+<p>Linux 磁盘管理常用三个命令为 <strong>df</strong>、<strong>du</strong> 和 <strong>fdisk</strong>。</p>
+<ul>
+<li><strong>df</strong>（英文全称：disk full）：列出文件系统的整体磁盘使用量</li>
+<li><strong>du</strong>（英文全称：disk used）：检查磁盘空间使用量</li>
+<li><strong>fdisk</strong>：用于磁盘分区</li>
+</ul>
+<hr>
+<h2 id="df"><a href="#df" class="headerlink" title="df"></a>df</h2><p>df命令参数功能：检查文件系统的磁盘空间占用情况。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。</p>
+<p>语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df [-ahikHTm] [目录或文件名]</span><br></pre></td></tr></table></figure>
+
+<p>选项与参数：</p>
+<ul>
+<li>-a ：列出所有的文件系统，包括系统特有的 /proc 等文件系统；</li>
+<li>-k ：以 KBytes 的容量显示各文件系统；</li>
+<li>-m ：以 MBytes 的容量显示各文件系统；</li>
+<li>-h ：以人们较易阅读的 GBytes, MBytes, KBytes 等格式自行显示；</li>
+<li>-H ：以 M=1000K 取代 M=1024K 的进位方式；</li>
+<li>-T ：显示文件系统类型, 连同该 partition 的 filesystem 名称 (例如 ext3) 也列出；</li>
+<li>-i ：不用硬盘容量，而以 inode 的数量来显示</li>
+</ul>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例 1"></a>实例 1</h3><p>将系统内所有的文件系统列出来！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# df</span><br><span class="line">Filesystem      1K-blocks      Used Available Use% Mounted on</span><br><span class="line">/dev/hdc2         9920624   3823112   5585444  41% /</span><br><span class="line">/dev/hdc3         4956316    141376   4559108   4% /home</span><br><span class="line">/dev/hdc1          101086     11126     84741  12% /boot</span><br><span class="line">tmpfs              371332         0    371332   0% /dev/shm</span><br></pre></td></tr></table></figure>
+
+<p>在 Linux 底下如果 df 没有加任何选项，那么默认会将系统内所有的 (不含特殊内存内的文件系统与 swap) 都以 1 Kbytes 的容量来列出来！</p>
+<h3 id="实例-2"><a href="#实例-2" class="headerlink" title="实例 2"></a>实例 2</h3><p>将容量结果以易读的容量格式显示出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# df -h</span><br><span class="line">Filesystem            Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/hdc2             9.5G  3.7G  5.4G  41% /</span><br><span class="line">/dev/hdc3             4.8G  139M  4.4G   4% /home</span><br><span class="line">/dev/hdc1              99M   11M   83M  12% /boot</span><br><span class="line">tmpfs                 363M     0  363M   0% /dev/shm</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例-3"><a href="#实例-3" class="headerlink" title="实例 3"></a>实例 3</h3><p>将系统内的所有特殊文件格式及名称都列出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# df -aT</span><br><span class="line">Filesystem    Type 1K-blocks    Used Available Use% Mounted on</span><br><span class="line">/dev/hdc2     ext3   9920624 3823112   5585444  41% /</span><br><span class="line">proc          proc         0       0         0   -  /proc</span><br><span class="line">sysfs        sysfs         0       0         0   -  /sys</span><br><span class="line">devpts      devpts         0       0         0   -  /dev/pts</span><br><span class="line">/dev/hdc3     ext3   4956316  141376   4559108   4% /home</span><br><span class="line">/dev/hdc1     ext3    101086   11126     84741  12% /boot</span><br><span class="line">tmpfs        tmpfs    371332       0    371332   0% /dev/shm</span><br><span class="line">none   binfmt_misc         0       0         0   -  /proc/sys/fs/binfmt_misc</span><br><span class="line">sunrpc  rpc_pipefs         0       0         0   -  /var/lib/nfs/rpc_pipefs</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例-4"><a href="#实例-4" class="headerlink" title="实例 4"></a>实例 4</h3><p>将 /etc 底下的可用的磁盘容量以易读的容量格式显示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# df -h /etc</span><br><span class="line">Filesystem            Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/hdc2             9.5G  3.7G  5.4G  41% /</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="du"><a href="#du" class="headerlink" title="du"></a>du</h2><p>Linux du 命令也是查看使用空间的，但是与 df 命令不同的是 Linux du 命令是对文件和目录磁盘使用的空间的查看，还是和df命令有一些区别的，这里介绍 Linux du 命令。</p>
+<p>语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du [-ahskm] 文件或目录名称</span><br></pre></td></tr></table></figure>
+
+<p>选项与参数：</p>
+<ul>
+<li>-a ：列出所有的文件与目录容量，因为默认仅统计目录底下的文件量而已。</li>
+<li>-h ：以人们较易读的容量格式 (G/M) 显示；</li>
+<li>-s ：列出总量而已，而不列出每个各别的目录占用容量；</li>
+<li>-S ：不包括子目录下的总计，与 -s 有点差别。</li>
+<li>-k ：以 KBytes 列出容量显示；</li>
+<li>-m ：以 MBytes 列出容量显示；</li>
+</ul>
+<h3 id="实例-1-1"><a href="#实例-1-1" class="headerlink" title="实例 1"></a>实例 1</h3><p>只列出当前目录下的所有文件夹容量（包括隐藏文件夹）:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# du</span><br><span class="line">8       ./test4     &lt;==每个目录都会列出来</span><br><span class="line">8       ./test2</span><br><span class="line">....中间省略....</span><br><span class="line">12      ./.gconfd   &lt;==包括隐藏文件的目录</span><br><span class="line">220     .           &lt;==这个目录(.)所占用的总量</span><br></pre></td></tr></table></figure>
+
+<p>直接输入 du 没有加任何选项时，则 du 会分析当前所在目录里的子目录所占用的硬盘空间。</p>
+<h3 id="实例-2-1"><a href="#实例-2-1" class="headerlink" title="实例 2"></a>实例 2</h3><p>将文件的容量也列出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# du -a</span><br><span class="line">12      ./install.log.syslog   &lt;==有文件的列表了</span><br><span class="line">8       ./.bash_logout</span><br><span class="line">8       ./test4</span><br><span class="line">8       ./test2</span><br><span class="line">....中间省略....</span><br><span class="line">12      ./.gconfd</span><br><span class="line">220     .</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例-3-1"><a href="#实例-3-1" class="headerlink" title="实例 3"></a>实例 3</h3><p>检查根目录底下每个目录所占用的容量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# du -sm /*</span><br><span class="line">7       /bin</span><br><span class="line">6       /boot</span><br><span class="line">.....中间省略....</span><br><span class="line">0       /proc</span><br><span class="line">.....中间省略....</span><br><span class="line">1       /tmp</span><br><span class="line">3859    /usr     &lt;==系统初期最大就是他了啦！</span><br><span class="line">77      /var</span><br></pre></td></tr></table></figure>
+
+<p>通配符 * 来代表每个目录。</p>
+<p>与 df 不一样的是，du 这个命令其实会直接到文件系统内去搜寻所有的文件数据。</p>
+<hr>
+<h2 id="fdisk"><a href="#fdisk" class="headerlink" title="fdisk"></a>fdisk</h2><p>fdisk 是 Linux 的磁盘分区表操作工具。</p>
+<p>语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk [-l] 装置名称</span><br></pre></td></tr></table></figure>
+
+<p>选项与参数：</p>
+<ul>
+<li>-l ：输出后面接的装置所有的分区内容。若仅有 fdisk -l 时， 则系统将会把整个系统内能够搜寻到的装置的分区均列出来。</li>
+</ul>
+<h3 id="实例-1-2"><a href="#实例-1-2" class="headerlink" title="实例 1"></a>实例 1</h3><p>列出所有分区信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@AY120919111755c246621 tmp]# fdisk -l</span><br><span class="line"></span><br><span class="line">Disk /dev/xvda: 21.5 GB, 21474836480 bytes</span><br><span class="line">255 heads, 63 sectors/track, 2610 cylinders</span><br><span class="line">Units = cylinders of 16065 * 512 = 8225280 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk identifier: 0x00000000</span><br><span class="line"></span><br><span class="line">    Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/xvda1   *           1        2550    20480000   83  Linux</span><br><span class="line">/dev/xvda2            2550        2611      490496   82  Linux swap / Solaris</span><br><span class="line"></span><br><span class="line">Disk /dev/xvdb: 21.5 GB, 21474836480 bytes</span><br><span class="line">255 heads, 63 sectors/track, 2610 cylinders</span><br><span class="line">Units = cylinders of 16065 * 512 = 8225280 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk identifier: 0x56f40944</span><br><span class="line"></span><br><span class="line">    Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/xvdb2               1        2610    20964793+  83  Linux</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例-2-2"><a href="#实例-2-2" class="headerlink" title="实例 2"></a>实例 2</h3><p>找出你系统中的根目录所在磁盘，并查阅该硬盘内的相关信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# df /            &lt;==注意：重点在找出磁盘文件名而已</span><br><span class="line">Filesystem           1K-blocks      Used Available Use% Mounted on</span><br><span class="line">/dev/hdc2              9920624   3823168   5585388  41% /</span><br><span class="line"></span><br><span class="line">[root@www ~]# fdisk /dev/hdc  &lt;==仔细看，不要加上数字喔！</span><br><span class="line">The number of cylinders for this disk is set to 5005.</span><br><span class="line">There is nothing wrong with that, but this is larger than 1024,</span><br><span class="line">and could in certain setups cause problems with:</span><br><span class="line">1) software that runs at boot time (e.g., old versions of LILO)</span><br><span class="line">2) booting and partitioning software from other OSs</span><br><span class="line">   (e.g., DOS FDISK, OS/2 FDISK)</span><br><span class="line"></span><br><span class="line">Command (m for help):     &lt;==等待你的输入！</span><br></pre></td></tr></table></figure>
+
+<p>输入 m 后，就会看到底下这些命令介绍</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Command (m for help): m   &lt;== 输入 m 后，就会看到底下这些命令介绍</span><br><span class="line">Command action</span><br><span class="line">   a   toggle a bootable flag</span><br><span class="line">   b   edit bsd disklabel</span><br><span class="line">   c   toggle the dos compatibility flag</span><br><span class="line">   d   delete a partition            &lt;==删除一个partition</span><br><span class="line">   l   list known partition types</span><br><span class="line">   m   print this menu</span><br><span class="line">   n   add a new partition           &lt;==新增一个partition</span><br><span class="line">   o   create a new empty DOS partition table</span><br><span class="line">   p   print the partition table     &lt;==在屏幕上显示分割表</span><br><span class="line">   q   quit without saving changes   &lt;==不储存离开fdisk程序</span><br><span class="line">   s   create a new empty Sun disklabel</span><br><span class="line">   t   change a partition&#x27;s system id</span><br><span class="line">   u   change display/entry units</span><br><span class="line">   v   verify the partition table</span><br><span class="line">   w   write table to disk and exit  &lt;==将刚刚的动作写入分割表</span><br><span class="line">   x   extra functionality (experts only)</span><br></pre></td></tr></table></figure>
+
+<p>离开 fdisk 时按下 <code>q</code>，那么所有的动作都不会生效！相反的， 按下<code>w</code>就是动作生效的意思。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Command (m for help): p  &lt;== 这里可以输出目前磁盘的状态</span><br><span class="line"></span><br><span class="line">Disk /dev/hdc: 41.1 GB, 41174138880 bytes        &lt;==这个磁盘的文件名与容量</span><br><span class="line">255 heads, 63 sectors/track, 5005 cylinders      &lt;==磁头、扇区与磁柱大小</span><br><span class="line">Units = cylinders of 16065 * 512 = 8225280 bytes &lt;==每个磁柱的大小</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/hdc1   *           1          13      104391   83  Linux</span><br><span class="line">/dev/hdc2              14        1288    10241437+  83  Linux</span><br><span class="line">/dev/hdc3            1289        1925     5116702+  83  Linux</span><br><span class="line">/dev/hdc4            1926        5005    24740100    5  Extended</span><br><span class="line">/dev/hdc5            1926        2052     1020096   82  Linux swap / Solaris</span><br><span class="line"># 装置文件名 启动区否 开始磁柱    结束磁柱  1K大小容量 磁盘分区槽内的系统</span><br><span class="line"></span><br><span class="line">Command (m for help): q</span><br></pre></td></tr></table></figure>
+
+<p>想要不储存离开吗？按下 q 就对了！不要随便按 w 啊！</p>
+<p>使用 <code>p</code> 可以列出目前这颗磁盘的分割表信息，这个信息的上半部在显示整体磁盘的状态。</p>
+<hr>
+<h3 id="磁盘格式化"><a href="#磁盘格式化" class="headerlink" title="磁盘格式化"></a>磁盘格式化</h3><p>磁盘分割完毕后自然就是要进行文件系统的格式化，格式化的命令非常的简单，使用 <code>mkfs</code>（make filesystem） 命令。</p>
+<p>语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs [-t 文件系统格式] 装置文件名</span><br></pre></td></tr></table></figure>
+
+<p>选项与参数：</p>
+<ul>
+<li>-t ：可以接文件系统格式，例如 ext3, ext2, vfat 等(系统有支持才会生效)</li>
+</ul>
+<h3 id="实例-1-3"><a href="#实例-1-3" class="headerlink" title="实例 1"></a>实例 1</h3><p>查看 mkfs 支持的文件格式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# mkfs[tab][tab]</span><br><span class="line">mkfs         mkfs.cramfs  mkfs.ext2    mkfs.ext3    mkfs.msdos   mkfs.vfat</span><br></pre></td></tr></table></figure>
+
+<p>按下两个[tab]，会发现 mkfs 支持的文件格式如上所示。</p>
+<h3 id="实例-2-3"><a href="#实例-2-3" class="headerlink" title="实例 2"></a>实例 2</h3><p>将分区 /dev/hdc6（可指定你自己的分区） 格式化为 ext3 文件系统：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# mkfs -t ext3 /dev/hdc6</span><br><span class="line">mke2fs 1.39 (29-May-2006)</span><br><span class="line">Filesystem label=                &lt;==这里指的是分割槽的名称(label)</span><br><span class="line">OS type: Linux</span><br><span class="line">Block size=4096 (log=2)          &lt;==block 的大小配置为 4K </span><br><span class="line">Fragment size=4096 (log=2)</span><br><span class="line">251392 inodes, 502023 blocks     &lt;==由此配置决定的inode/block数量</span><br><span class="line">25101 blocks (5.00%) reserved for the super user</span><br><span class="line">First data block=0</span><br><span class="line">Maximum filesystem blocks=515899392</span><br><span class="line">16 block groups</span><br><span class="line">32768 blocks per group, 32768 fragments per group</span><br><span class="line">15712 inodes per group</span><br><span class="line">Superblock backups stored on blocks:</span><br><span class="line">        32768, 98304, 163840, 229376, 294912</span><br><span class="line"></span><br><span class="line">Writing inode tables: done</span><br><span class="line">Creating journal (8192 blocks): done &lt;==有日志记录</span><br><span class="line">Writing superblocks and filesystem accounting information: done</span><br><span class="line"></span><br><span class="line">This filesystem will be automatically checked every 34 mounts or</span><br><span class="line">180 days, whichever comes first.  Use tune2fs -c or -i to override.</span><br><span class="line"># 这样就创建起来我们所需要的 Ext3 文件系统了！简单明了！</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="磁盘检验"><a href="#磁盘检验" class="headerlink" title="磁盘检验"></a>磁盘检验</h2><p>fsck（file system check）用来检查和维护不一致的文件系统。</p>
+<p>若系统掉电或磁盘发生问题，可利用fsck命令对文件系统进行检查。</p>
+<p>语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fsck [-t 文件系统] [-ACay] 装置名称</span><br></pre></td></tr></table></figure>
+
+<p>选项与参数：</p>
+<ul>
+<li>-t : 给定档案系统的型式，若在 /etc/fstab 中已有定义或 kernel 本身已支援的则不需加上此参数</li>
+<li>-s : 依序一个一个地执行 fsck 的指令来检查</li>
+<li>-A : 对/etc/fstab 中所有列出来的 分区（partition）做检查</li>
+<li>-C : 显示完整的检查进度</li>
+<li>-d : 打印出 e2fsck 的 debug 结果</li>
+<li>-p : 同时有 -A 条件时，同时有多个 fsck 的检查一起执行</li>
+<li>-R : 同时有 -A 条件时，省略 / 不检查</li>
+<li>-V : 详细显示模式</li>
+<li>-a : 如果检查有错则自动修复</li>
+<li>-r : 如果检查有错则由使用者回答是否修复</li>
+<li>-y : 选项指定检测每个文件是自动输入yes，在不确定那些是不正常的时候，可以执行 # fsck -y 全部检查修复。</li>
+</ul>
+<h3 id="实例-1-4"><a href="#实例-1-4" class="headerlink" title="实例 1"></a>实例 1</h3><p>查看系统有多少文件系统支持的 fsck 命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# fsck[tab][tab]</span><br><span class="line">fsck         fsck.cramfs  fsck.ext2    fsck.ext3    fsck.msdos   fsck.vfat</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例-2-4"><a href="#实例-2-4" class="headerlink" title="实例 2"></a>实例 2</h3><p>强制检测 /dev/hdc6 分区:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# fsck -C -f -t ext3 /dev/hdc6 </span><br><span class="line">fsck 1.39 (29-May-2006)</span><br><span class="line">e2fsck 1.39 (29-May-2006)</span><br><span class="line">Pass 1: Checking inodes, blocks, and sizes</span><br><span class="line">Pass 2: Checking directory structure</span><br><span class="line">Pass 3: Checking directory connectivity</span><br><span class="line">Pass 4: Checking reference counts</span><br><span class="line">Pass 5: Checking group summary information</span><br><span class="line">vbird_logical: 11/251968 files (9.1% non-contiguous), 36926/1004046 blocks</span><br></pre></td></tr></table></figure>
+
+<p>如果没有加上 -f 的选项，则由于这个文件系统不曾出现问题，检查的经过非常快速！若加上 -f 强制检查，才会一项一项的显示过程。</p>
+<hr>
+<h2 id="磁盘挂载与卸除"><a href="#磁盘挂载与卸除" class="headerlink" title="磁盘挂载与卸除"></a>磁盘挂载与卸除</h2><p>Linux 的磁盘挂载使用 <code>mount</code> 命令，卸载使用 <code>umount</code> 命令。</p>
+<p>磁盘挂载语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount [-t 文件系统] [-L Label名] [-o 额外选项] [-n]  装置文件名  挂载点</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例-1-5"><a href="#实例-1-5" class="headerlink" title="实例 1"></a>实例 1</h3><p>用默认的方式，将刚刚创建的 /dev/hdc6 挂载到 /mnt/hdc6 上面！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# mkdir /mnt/hdc6</span><br><span class="line">[root@www ~]# mount /dev/hdc6 /mnt/hdc6</span><br><span class="line">[root@www ~]# df</span><br><span class="line">Filesystem           1K-blocks      Used Available Use% Mounted on</span><br><span class="line">.....中间省略.....</span><br><span class="line">/dev/hdc6              1976312     42072   1833836   3% /mnt/hdc6</span><br></pre></td></tr></table></figure>
+
+<p>磁盘卸载命令 <code>umount</code> 语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">umount [-fn] 装置文件名或挂载点</span><br></pre></td></tr></table></figure>
+
+<p>选项与参数：</p>
+<ul>
+<li>-f ：强制卸除！可用在类似网络文件系统 (NFS) 无法读取到的情况下；</li>
+<li>-n ：不升级 /etc/mtab 情况下卸除。</li>
+</ul>
+<p>卸载/dev/hdc6</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="meta">@www</span> ~]# umount /dev/hdc6     </span><br></pre></td></tr></table></figure>
+
+<h1 id="Linux进程管理"><a href="#Linux进程管理" class="headerlink" title="Linux进程管理"></a>Linux进程管理</h1><p>Linux实现进程管理</p>
+<p>在linux中每个执行的程序都称为一个进程。每个进程都分配一个ID号</p>
+<p>每一个进程都会对应一个父进程，这个父进程可以复制多个子进程</p>
+<p>每个进程都可以以两种方式存在： 前台和后台</p>
+<p>一般系统的服务都是以后台进程的方式存在</p>
+<p>Ps命令</p>
+<p>相关字段：</p>
+<p>PID 进程识别号</p>
+<p>TTY 终端机号</p>
+<p>TIME 此进程所消耗的CPU时间</p>
+<p>CMD 正在执行的命令或进程名</p>
+<p>ps -a 显示当前终端的所有进程信息</p>
+<p>Ps -u 以用户的格式显示进程信息</p>
+<p>Ps -x 显示后台运行的参数</p>
+<p>相关例子</p>
+<p>Ps -aux | more</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/wps46B6.tmp.jpg" alt="img"> </p>
+<p>(START 进程启动时间  TIME 进程消耗CPU时间  COMMAND 进程执行时的命令行)</p>
+<p>Ps -aux | grep xxx 查找指定的进程</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/wps46B7.tmp.jpg" alt="img"> </p>
+<p>Ps -ef | more  (ps -ef 是以全格式显示当前所有的进程)</p>
+<p>C (CPU用于计算执行优先级的因子)   PPID(父进程ID)</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/wps46B8.tmp.jpg" alt="img"> </p>
+<p>Ps -ef |grep xxx查看具体某个进程的父进程</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/wps46B9.tmp.jpg" alt="img"> </p>
+<p>终止进程 kill 命令 和 killall</p>
+<p>kill [选项] 进程号</p>
+<p>kill 进程名称</p>
+<p>常用 -9 强制终止进程</p>
+<p>查看进程数 pstree</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/wps46BA.tmp.jpg" alt="img"> </p>
+<p>-p 树状的形式显示进程的pid</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/wps46BB.tmp.jpg" alt="img"> </p>
+<p>-u 树状的显示用户的id</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/wps46BC.tmp.jpg" alt="img"> </p>
+<p>服务service管理</p>
+<p>服务的本质就是进程，但是运行在后台，通常都会监听某个接口，等待其他程序的请求 比如MySQL sshd 又称为守护进程 </p>
+<p>centos7.0之后 服务使用 systemctl指令 服务名 [start,stop, restart,status ,reload]</p>
+<p>以防火墙为例：</p>
+<p>查看防火墙状态</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/wps46BD.tmp.jpg" alt="img"> </p>
+<p>关闭防火墙</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/wps46BE.tmp.jpg" alt="img"> </p>
+<p>开启防火墙</p>
+<p><img src="linux%E5%AD%A6%E4%B9%A0.assets/wps46BF.tmp.jpg" alt="img"> </p>
+<p>服务的运行级别</p>
+<p>Linux 有7种运行级别 常用的级别是3和5</p>
+<p>运行级别0：系统停机状态，系统的默认运行级别不能设为0，否则不能正常启动</p>
+<p>运行级别1：单用户工作状态，root权限，用于系统维护，禁止远程登录</p>
+<p>运行级别2：多用户状态（没有nfs） 不支持网络</p>
+<p>运行级别3：完全的多用户状态（有nfs） 登录后进入控制台命令行模式</p>
+<p>运行级别4：系统未使用，保留</p>
+<p>运行级别5：x11控制台，登录后进入图形GUI模式</p>
+<p>运行级别6：系统正常关闭并重启 默认级别不能设为6 否则系统将不能正常启动</p>
+<p>开机流程说明 </p>
+<p>开机 –&gt; BIOS –&gt;/boot –&gt; init进程 –&gt;运行级别 –&gt;运行级对应的服务</p>
+<p>动态监控进程 top指令</p>
+<p>显示正在执行的进程，与ps的区别是，top在执行一段时间可以更新正在运行的进程</p>
+<p>交互页面按 u 可以指定特定用户  按 k 可以终止指定的进程</p>
+<p>参数</p>
+<p>-d描述  指定top每隔几秒更新，默认是3</p>
+<p>-i 使top不显示任何闲置或者僵死进程</p>
+<p>-p 通过指定监控进程ID 来仅仅监控某个进程的状态</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="https://www.runoob.com/">菜鸟教程 - 学的不仅是技术，更是梦想！ (runoob.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1dW411M7xL?from=search&seid=2070995983261695966&spm_id_from=333.337.0.0">尚硅谷Linux教程(千万级学习人次，好评如潮)_哔哩哔哩_bilibili</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">逗号</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/01/10/linux%E5%AD%A6%E4%B9%A0/">http://example.com/2022/01/10/linux%E5%AD%A6%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">修道馆</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="/img/fengmian.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/10/MySQL%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/"><img class="prev-cover" src="/img/fengmian.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SQL连接查询</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/10/OAuth2.0%E5%8D%8F%E8%AE%AE/"><img class="next-cover" src="/img/fengmian.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">什么是OAuth2.0协议</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/touxiang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">逗号</div><div class="author-info__description">大佬的第一步是从加入收藏夹开始的</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xiaobai111a" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">Linux的目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">基本介绍</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vi%E5%92%8Cvim%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">vi和vim编辑器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="toc-number">2.0.1.</span> <span class="toc-text">正常模式（命令模式）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.0.2.</span> <span class="toc-text">编辑模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.0.3.</span> <span class="toc-text">命令行模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">Linux 用户管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">3.1.</span> <span class="toc-text">基本语法</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7"><span class="toc-number">3.1.0.1.</span> <span class="toc-text">1. 添加用户</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-%E5%88%A0%E9%99%A4%E8%B4%A6%E5%8F%B7"><span class="toc-number">3.1.0.2.</span> <span class="toc-text">2.删除账号</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-%E4%BF%AE%E6%94%B9%E8%B4%A6%E5%8F%B7"><span class="toc-number">3.1.0.3.</span> <span class="toc-text">3.修改账号</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-%E7%94%A8%E6%88%B7%E5%8F%A3%E4%BB%A4%E7%9A%84%E7%AE%A1%E7%90%86"><span class="toc-number">3.1.0.4.</span> <span class="toc-text">4.用户口令的管理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84%E7%9A%84%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6"><span class="toc-number">3.2.</span> <span class="toc-text">用户和组的相关文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#linux%E7%9A%84%E8%BF%90%E8%A1%8C%E7%BA%A7%E5%88%AB"><span class="toc-number">3.3.</span> <span class="toc-text">linux的运行级别</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#question-%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%9A-%E5%A6%82%E4%BD%95%E6%89%BE%E5%9B%9Eroot%E5%AF%86%E7%A0%81"><span class="toc-number">3.3.0.1.</span> <span class="toc-text">:question:面试题： 如何找回root密码</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%8E%8B%E7%BC%A9"><span class="toc-number">4.</span> <span class="toc-text">文件的压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-gzip-%E4%B8%8E-gunzip-%EF%BC%88%E4%B8%8D%E5%B8%B8%E7%94%A8%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">1. gzip 与 gunzip （不常用）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-zip-uzip-%E6%8C%87%E4%BB%A4-%E5%9C%A8%E6%89%93%E5%8C%85%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BC%9A%E5%BE%88%E6%9C%89%E7%94%A8"><span class="toc-number">4.2.</span> <span class="toc-text">2.zip&#x2F;uzip 指令(在打包项目中会很有用)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95-1"><span class="toc-number">4.2.1.</span> <span class="toc-text">基本语法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9"><span class="toc-number">4.2.2.</span> <span class="toc-text">常用选项</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-tar%E6%8C%87%E4%BB%A4"><span class="toc-number">4.3.</span> <span class="toc-text">3.tar指令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95-2"><span class="toc-number">4.3.1.</span> <span class="toc-text">基本语法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E9%A1%B9%E8%AF%B4%E6%98%8E%EF%BC%9A"><span class="toc-number">4.3.2.</span> <span class="toc-text">选项说明：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E7%AE%A1%E7%90%86%E5%92%8C%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="toc-number">5.</span> <span class="toc-text">组管理和权限管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Linux%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.1.</span> <span class="toc-text">1. Linux组的基本介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%9A%84%E6%89%80%E6%9C%89%E8%80%85"><span class="toc-number">5.1.0.1.</span> <span class="toc-text">查看文件的所有者</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%89%80%E6%9C%89%E8%80%85"><span class="toc-number">5.1.0.2.</span> <span class="toc-text">修改文件所有者</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%89%80%E5%9C%A8%E7%BB%84"><span class="toc-number">5.1.0.3.</span> <span class="toc-text">修改文件所在组</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%9D%83%E9%99%90%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.2.</span> <span class="toc-text">2.权限的基本介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90-chmod%E6%8C%87%E4%BB%A4"><span class="toc-number">5.2.0.1.</span> <span class="toc-text">修改权限 -chmod指令</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%89%80%E6%9C%89%E8%80%85-chown"><span class="toc-number">5.2.0.2.</span> <span class="toc-text">修改文件所有者-chown</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%9A%84%E6%89%80%E6%9C%89%E7%BB%84"><span class="toc-number">5.2.0.3.</span> <span class="toc-text">修改文件的所有组</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6"><span class="toc-number">6.</span> <span class="toc-text">任务调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#crond-%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6"><span class="toc-number">6.1.</span> <span class="toc-text">crond 任务调度</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D-1"><span class="toc-number">6.1.0.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">6.1.0.2.</span> <span class="toc-text">快速入门</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86"><span class="toc-number">7.</span> <span class="toc-text">磁盘管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E5%8C%BA%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="toc-number">7.1.</span> <span class="toc-text">分区基本知识</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%86%E5%8C%BA%E7%9A%84%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="toc-number">7.1.1.</span> <span class="toc-text">分区的方式：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E5%88%86%E5%8C%BA"><span class="toc-number">7.2.</span> <span class="toc-text">Linux分区</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A1%AC%E7%9B%98%E8%AF%B4%E6%98%8E"><span class="toc-number">7.2.1.</span> <span class="toc-text">硬盘说明</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86"><span class="toc-number"></span> <span class="toc-text">Linux 磁盘管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#df"><span class="toc-number"></span> <span class="toc-text">df</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-1"><span class="toc-number">1.</span> <span class="toc-text">实例 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-2"><span class="toc-number">2.</span> <span class="toc-text">实例 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-3"><span class="toc-number">3.</span> <span class="toc-text">实例 3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-4"><span class="toc-number">4.</span> <span class="toc-text">实例 4</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#du"><span class="toc-number"></span> <span class="toc-text">du</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-1-1"><span class="toc-number">1.</span> <span class="toc-text">实例 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-2-1"><span class="toc-number">2.</span> <span class="toc-text">实例 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-3-1"><span class="toc-number">3.</span> <span class="toc-text">实例 3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fdisk"><span class="toc-number"></span> <span class="toc-text">fdisk</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-1-2"><span class="toc-number">1.</span> <span class="toc-text">实例 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-2-2"><span class="toc-number">2.</span> <span class="toc-text">实例 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">磁盘格式化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-1-3"><span class="toc-number">4.</span> <span class="toc-text">实例 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-2-3"><span class="toc-number">5.</span> <span class="toc-text">实例 2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E6%A3%80%E9%AA%8C"><span class="toc-number"></span> <span class="toc-text">磁盘检验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-1-4"><span class="toc-number">1.</span> <span class="toc-text">实例 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-2-4"><span class="toc-number">2.</span> <span class="toc-text">实例 2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD%E4%B8%8E%E5%8D%B8%E9%99%A4"><span class="toc-number"></span> <span class="toc-text">磁盘挂载与卸除</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-1-5"><span class="toc-number">1.</span> <span class="toc-text">实例 1</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="toc-number"></span> <span class="toc-text">Linux进程管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number"></span> <span class="toc-text">参考资料</span></a></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/MySQL%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" title="SQL连接查询"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SQL连接查询"/></a><div class="content"><a class="title" href="/2022/01/10/MySQL%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" title="SQL连接查询">SQL连接查询</a><time datetime="2022-01-10T10:14:04.950Z" title="发表于 2022-01-10 18:14:04">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/linux%E5%AD%A6%E4%B9%A0/" title="Linux学习总结"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux学习总结"/></a><div class="content"><a class="title" href="/2022/01/10/linux%E5%AD%A6%E4%B9%A0/" title="Linux学习总结">Linux学习总结</a><time datetime="2022-01-10T10:11:37.229Z" title="发表于 2022-01-10 18:11:37">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/OAuth2.0%E5%8D%8F%E8%AE%AE/" title="什么是OAuth2.0协议"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="什么是OAuth2.0协议"/></a><div class="content"><a class="title" href="/2022/01/10/OAuth2.0%E5%8D%8F%E8%AE%AE/" title="什么是OAuth2.0协议">什么是OAuth2.0协议</a><time datetime="2022-01-10T10:10:16.989Z" title="发表于 2022-01-10 18:10:16">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/%E7%94%A8%E6%88%B7%E6%8E%A5%E5%8F%A3%E7%AE%A1%E7%90%86/" title="无题"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/01/10/%E7%94%A8%E6%88%B7%E6%8E%A5%E5%8F%A3%E7%AE%A1%E7%90%86/" title="无题">无题</a><time datetime="2022-01-10T10:09:06.270Z" title="发表于 2022-01-10 18:09:06">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" title="无题"><img src="/img/fengmian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/01/10/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" title="无题">无题</a><time datetime="2022-01-10T10:07:32.030Z" title="发表于 2022-01-10 18:07:32">2022-01-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 逗号</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
